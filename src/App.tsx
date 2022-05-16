@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { FC, useEffect } from 'react';
+import './App.scss';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { solanaWalletActions } from '@/store/reducers/solanaWallet';
+import { Keypair } from '@solana/web3.js';
+import AppRouter from '@/components/AppRouter';
+import Sidebar from '@/components/Sidebar';
 
-function App() {
+const App: FC = () => {
+  const { address, balance, count } = useAppSelector((state) => state.solanaWallet);
+  const dispatch = useAppDispatch();
+
+  const click = (e: React.MouseEvent) => {
+    dispatch(solanaWalletActions.setCount(count + 10));
+    dispatch(solanaWalletActions.setAddress(Keypair.generate().publicKey));
+  };
+
+  useEffect(() => {
+    console.log('Works', { address, count });
+  }, [address, count]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main">
+      <p className="text">Hello world!</p>
+      <button onClick={click}>Set balance</button>
+      <input type="text" />
+      <p>Count: {count}</p>
+      <p>PublicKey: {address.toString()}</p>
+      <p>Balance: {balance.toString()}</p>
+      <Sidebar />
+      <AppRouter />
     </div>
   );
-}
+};
 
 export default App;

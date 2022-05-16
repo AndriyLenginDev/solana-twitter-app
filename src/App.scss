@@ -1,0 +1,7 @@
+.main {
+  @apply block p-4;
+
+  .text {
+    @apply text-black font-semibold text-2xl bg-gray-200 w-fit rounded-full p-4;
+  }
+}
