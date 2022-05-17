@@ -1,5 +1,4 @@
 import React, { FC, useEffect } from 'react';
-import './App.scss';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { solanaWalletActions } from '@/store/reducers/solanaWallet';
@@ -8,26 +7,37 @@ import AppRouter from '@/components/AppRouter';
 import Sidebar from '@/components/Sidebar';
 
 const App: FC = () => {
-  const { address, balance, count } = useAppSelector((state) => state.solanaWallet);
+  const { connected, address, balance } = useAppSelector((state) => state.solanaWallet);
   const dispatch = useAppDispatch();
 
-  const click = (e: React.MouseEvent) => {
-    dispatch(solanaWalletActions.setCount(count + 10));
+  const updateBalance = (e: React.MouseEvent) => {
     dispatch(solanaWalletActions.setAddress(Keypair.generate().publicKey));
   };
 
+  const toggleConnected = (e: React.MouseEvent) => {
+    dispatch(solanaWalletActions.setConnected(!connected));
+  };
+
   useEffect(() => {
-    console.log('Works', { address, count });
-  }, [address, count]);
+    console.log('Works', { address });
+  }, [address]);
 
   return (
     <div className="main">
       <p className="text">Hello world!</p>
-      <button onClick={click}>Set balance</button>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={updateBalance}>
+        Set balance
+      </button>
       <input type="text" />
-      <p>Count: {count}</p>
       <p>PublicKey: {address.toString()}</p>
       <p>Balance: {balance.toString()}</p>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={toggleConnected}>
+        Toggle connected
+      </button>
       <Sidebar />
       <AppRouter />
     </div>

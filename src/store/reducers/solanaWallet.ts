@@ -3,17 +3,15 @@ import { PublicKey } from '@solana/web3.js';
 import { BN } from '@project-serum/anchor';
 
 export interface ISolanaWallet {
+  connected: boolean;
   address: PublicKey;
   balance: BN;
-  //
-  count: number;
 }
 
 export const initialState: ISolanaWallet = {
+  connected: false,
   address: new PublicKey(0),
-  balance: new BN(0),
-  //
-  count: 0
+  balance: new BN(0)
 };
 
 export const solanaWalletSliceName = 'solanaWallet';
@@ -24,17 +22,16 @@ const solanaWalletSlice = createSlice({
     resetState() {
       return initialState;
     },
+    setConnected(state, action: PayloadAction<boolean>) {
+      state.connected = action.payload;
+      return state;
+    },
     setAddress(state, action: PayloadAction<PublicKey>) {
       state.address = action.payload;
       return state;
     },
     setBalance(state, action: PayloadAction<BN>) {
       state.balance = action.payload;
-      return state;
-    },
-    //
-    setCount(state, action: PayloadAction<number>) {
-      state.count = action.payload;
       return state;
     }
   }

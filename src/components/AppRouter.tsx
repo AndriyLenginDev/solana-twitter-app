@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { RoutePaths } from '@/router';
 import Loading from '@/components/Loading';
@@ -8,7 +8,7 @@ const AppRouter: FC = () => {
   const routes = useAppRoutes();
 
   return (
-    <React.Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading />}>
       <Routes>
         {routes.map((route) => (
           <Route
@@ -20,7 +20,7 @@ const AppRouter: FC = () => {
         {/*prettier-ignore*/}
         <Route path="*" element={<Navigate replace to={RoutePaths.HOME} />} />
       </Routes>
-    </React.Suspense>
+    </Suspense>
   );
 };
 

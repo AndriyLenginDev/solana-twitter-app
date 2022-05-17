@@ -16,8 +16,8 @@ export enum RoutePaths {
 }
 
 export interface IRoute {
-  key?: RouteKeys;
-  name?: RouteNames;
+  key: RouteKeys;
+  name: RouteNames;
   path: RoutePaths;
   component: React.ComponentType;
 }
