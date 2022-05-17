@@ -1,14 +1,17 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { solanaWalletActions } from '@/store/reducers/solanaWallet';
 import { Keypair } from '@solana/web3.js';
 import AppRouter from '@/components/AppRouter';
 import Sidebar from '@/components/Sidebar';
+import Button from '@/components/general/Button/Button';
 
 const App: FC = () => {
   const { connected, address, balance } = useAppSelector((state) => state.solanaWallet);
   const dispatch = useAppDispatch();
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const updateBalance = (e: React.MouseEvent) => {
     dispatch(solanaWalletActions.setAddress(Keypair.generate().publicKey));
@@ -16,6 +19,13 @@ const App: FC = () => {
 
   const toggleConnected = (e: React.MouseEvent) => {
     dispatch(solanaWalletActions.setConnected(!connected));
+  };
+
+  const search = (e: React.MouseEvent) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   };
 
   useEffect(() => {
@@ -38,6 +48,11 @@ const App: FC = () => {
         onClick={toggleConnected}>
         Toggle connected
       </button>
+      <Button
+        loading={loading}
+        onClick={search}>
+        Search
+      </Button>
       <Sidebar />
       <AppRouter />
     </div>

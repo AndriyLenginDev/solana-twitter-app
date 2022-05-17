@@ -1,0 +1,22 @@
+.btn {
+  @apply py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 inline-flex items-center transition-all duration-150;
+  &:hover {
+    @apply bg-gray-100 text-blue-700;
+  }
+
+  &:focus {
+    @apply text-blue-700;
+  }
+
+  &__loader {
+    @apply inline-flex items-center overflow-hidden;
+
+    &--active {
+      @apply mr-2;
+    }
+  }
+
+  &__txt {
+    flex-grow: 1;
+  }
+}
