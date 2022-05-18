@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+  @apply flex-1 border-r border-l ml-20 md:ml-64 min-h-screen;
+}
+
 .fade {
   &-enter {
     @apply opacity-0;
