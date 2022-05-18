@@ -5,7 +5,7 @@ import { solanaWalletActions } from '@/store/reducers/solanaWallet';
 import { Keypair } from '@solana/web3.js';
 import AppRouter from '@/components/AppRouter';
 import Sidebar from '@/components/Sidebar';
-import Button from '@/components/general/Button/Button';
+import Button, { ButtonVariants } from '@/components/general/Button/Button';
 
 const App: FC = () => {
   const { connected, address, balance } = useAppSelector((state) => state.solanaWallet);
@@ -34,25 +34,24 @@ const App: FC = () => {
 
   return (
     <div className="main">
-      <p className="text">Hello world!</p>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      <h1 className="text-gray-200">test</h1>
+      <Button
+        variant={ButtonVariants.SECONDARY}
         onClick={updateBalance}>
         Set balance
-      </button>
+      </Button>
       <input type="text" />
       <p>PublicKey: {address.toString()}</p>
       <p>Balance: {balance.toString()}</p>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={toggleConnected}>
-        Toggle connected
-      </button>
-      <Button
-        loading={loading}
-        onClick={search}>
-        Search
-      </Button>
+      <div className="inline-flex items-center">
+        <Button onClick={toggleConnected}>Toggle connected</Button>
+        <Button
+          className="ml-4"
+          loading={loading}
+          onClick={search}>
+          Search
+        </Button>
+      </div>
       <Sidebar />
       <AppRouter />
     </div>

@@ -1,37 +1,62 @@
-import React, { FC, ComponentPropsWithoutRef, useRef, useEffect } from 'react';
+import React, { FC, ComponentPropsWithoutRef, useMemo, useRef, useEffect } from 'react';
 import classes from './Button.module.scss';
 import LoaderIcon from '@/components/icons/LoaderIcon';
-import AppTransition from '@/components/AppTransition';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
+
+export enum ButtonVariants {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary'
+}
 
 export interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children?: React.ReactNode;
   className?: string;
   loading?: boolean;
+  variant?: ButtonVariants;
 }
 
-const Button: FC<ButtonProps> = ({ children, className, loading, ...props }) => {
+const Button: FC<ButtonProps> = ({
+  children,
+  className,
+  loading,
+  variant = ButtonVariants.PRIMARY,
+  ...props
+}) => {
   const btnRef = useRef<HTMLButtonElement>(null);
+
+  const variantClassName = useMemo<string>(() => {
+    return classes[`btn--${variant}`];
+  }, [variant]);
 
   useEffect(() => {
     if (btnRef.current) {
-      const btnWidth = btnRef.current.clientWidth + 24; // loader width + margin-right
+      const btnWidth = btnRef.current.offsetWidth;
       btnRef.current.style.width = `${btnWidth}px`;
     }
   }, []);
 
   return (
     <button
-      {...props}
       ref={btnRef}
-      className={[classes.btn, className].join(' ')}>
-      <AppTransition
-        inProp={loading}
-        classNames="loader-animation">
-        <div className={`${classes['btn__loader']} ${loading ? 'mr-2' : ''}`}>
-          <LoaderIcon fill="#3b82f6" />
-        </div>
-      </AppTransition>
-      <div className={classes['btn__txt']}>{children}</div>
+      {...props}
+      className={[classes.btn, variantClassName, className].join(' ')}>
+      <SwitchTransition mode="out-in">
+        <CSSTransition
+          addEndListener={(node: HTMLElement, done: () => void) => {
+            node.addEventListener('transitionend', done, false);
+          }}
+          key={loading ? 'loader' : 'btn'}
+          classNames="fade"
+          unmountOnExit>
+          {loading ? (
+            <div className={classes.btn__loader}>
+              <LoaderIcon className={classes.loader_color} />
+            </div>
+          ) : (
+            <div className={classes.btn__txt}>{children}</div>
+          )}
+        </CSSTransition>
+      </SwitchTransition>
     </button>
   );
 };

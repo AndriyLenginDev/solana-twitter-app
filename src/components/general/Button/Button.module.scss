@@ -1,22 +1,35 @@
 .btn {
-  @apply py-2.5 px-5 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 inline-flex items-center transition-all duration-150;
-  &:hover {
-    @apply bg-gray-100 text-blue-700;
+  @apply box-border py-2.5 px-5 text-sm font-medium rounded-full border inline-flex items-center justify-center transition-all ease-in-out duration-150;
+
+  &--primary {
+    @apply text-white bg-blue-500 border-blue-500;
+
+    &:hover {
+      @apply bg-blue-700;
+    }
+
+    .loader_color {
+      @apply text-white;
+    }
   }
 
-  &:focus {
-    @apply text-blue-700;
+  &--secondary {
+    @apply text-blue-500 bg-white border-gray-200;
+
+    &:hover {
+      @apply bg-gray-100;
+    }
+
+    .loader_color {
+      @apply text-blue-500;
+    }
   }
 
   &__loader {
     @apply inline-flex items-center overflow-hidden;
-
-    &--active {
-      @apply mr-2;
-    }
   }
 
   &__txt {
-    flex-grow: 1;
+    @apply flex-grow font-bold whitespace-nowrap;
   }
 }
