@@ -1,5 +1,5 @@
 .btn {
-  @apply box-border py-2.5 px-5 text-sm font-medium rounded-full border inline-flex items-center justify-center transition-all ease-in-out duration-150;
+  @apply box-border py-2.5 px-5 text-sm font-medium rounded-md border inline-flex items-center justify-center transition-all ease-in-out duration-150;
 
   &--primary {
     @apply text-white bg-blue-500 border-blue-500;

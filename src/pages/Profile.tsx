@@ -1,12 +1,11 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import Header from '@/components/Header/Header';
 
 const Profile: FC = () => {
   return (
-    <main>
-      <h1 className="text-center text-cyan-800">
-        Profile page
-      </h1>
-    </main>
+    <div>
+      <Header>Profile</Header>
+    </div>
   );
 };
 

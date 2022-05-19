@@ -1,14 +1,16 @@
-import React, { FC, ComponentType, Suspense } from 'react';
+import React, { FC, ComponentType, Suspense, SVGProps } from 'react';
 import classes from './Sidebar.module.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useAppRoutes } from '@/hooks/useAppRoutes';
 import { RouteKeys } from '@/router';
 import CircleIcon from '@/components/icons/CircleIcon';
-// import HomeIcon from '@/components/icons/HomeIcon';
-// import ProfileIcon from '@/components/icons/ProfileIcon';
+import HomeIcon from '@/components/icons/HomeIcon';
+import ProfileIcon from '@/components/icons/ProfileIcon';
 
-const HomeIcon = React.lazy(() => import('@/components/icons/HomeIcon'));
-const ProfileIcon = React.lazy(() => import('@/components/icons/ProfileIcon'));
+interface ILinkClassNameArgs { isActive: boolean }
+
+// const HomeIcon = React.lazy(() => import('@/components/icons/HomeIcon'));
+// const ProfileIcon = React.lazy(() => import('@/components/icons/ProfileIcon'));
 
 const Sidebar: FC = () => {
   const routes = useAppRoutes();
@@ -20,21 +22,25 @@ const Sidebar: FC = () => {
     [RouteKeys.TEST, React.lazy(() => import('@/components/icons/CircleIcon'))]
   ]);
 
+  const linkClassName = ({ isActive }: ILinkClassNameArgs): string => {
+    return `${classes.sidebar__link} ${isActive ? classes['sidebar__link--active'] : ''}`;
+  };
+
   return (
     <aside className={classes.sidebar}>
       <ul>
         {routes.map((route) => {
-          const Icon = iconsMap.get(route.key) as ComponentType;
+          const Icon = iconsMap.get(route.key) as ComponentType<SVGProps<SVGSVGElement>>;
           return (
             <li key={route.key}>
-              <Link
+              <NavLink
                 to={route.path}
-                className={classes.sidebar__link}>
+                className={linkClassName}>
                 <Suspense fallback={<CircleIcon />}>
-                  <Icon />
+                  <Icon className={classes.link__icon} />
                 </Suspense>
                 {route.name}
-              </Link>
+              </NavLink>
             </li>
           );
         })}

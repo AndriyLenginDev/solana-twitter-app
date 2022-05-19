@@ -1,12 +1,11 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import Header from '@/components/Header/Header';
 
 const Home: FC = () => {
   return (
-    <main>
-      <h1 className="text-center text-cyan-800">
-        Home page
-      </h1>
-    </main>
+    <div>
+      <Header>Home</Header>
+    </div>
   );
 };
 
