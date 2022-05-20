@@ -2,6 +2,7 @@ import React from 'react';
 
 export enum RouteKeys {
   HOME = 'HOME',
+  USERS = 'USERS',
   PROFILE = 'PROFILE'
   //
   ,TEST = 'TEST'
@@ -9,6 +10,7 @@ export enum RouteKeys {
 
 export enum RouteNames {
   HOME = 'Home',
+  USERS = 'Users',
   PROFILE = 'Profile'
   //
   ,TEST = 'Test'
@@ -16,6 +18,7 @@ export enum RouteNames {
 
 export enum RoutePaths {
   HOME = '/',
+  USERS = '/users',
   PROFILE = '/profile'
   //
   ,TEST = '/test'
@@ -37,6 +40,7 @@ const generateRoute = (key: RouteKeys): IRoute => ({
 
 export const routesMap: Record<RouteKeys, IRoute> = {
   [RouteKeys.HOME]: generateRoute(RouteKeys.HOME),
+  [RouteKeys.USERS]: generateRoute(RouteKeys.USERS),
   [RouteKeys.PROFILE]: generateRoute(RouteKeys.PROFILE)
   //
   ,[RouteKeys.TEST]: generateRoute(RouteKeys.TEST)
@@ -44,7 +48,8 @@ export const routesMap: Record<RouteKeys, IRoute> = {
 
 // prettier-ignore
 export const publicRoutes: IRoute[] = [
-  routesMap[RouteKeys.HOME]
+  routesMap[RouteKeys.HOME],
+  routesMap[RouteKeys.USERS]
   //
   ,routesMap[RouteKeys.TEST]
 ];
@@ -52,6 +57,7 @@ export const publicRoutes: IRoute[] = [
 // prettier-ignore
 export const privateRoutes: IRoute[] = [
   routesMap[RouteKeys.HOME],
+  routesMap[RouteKeys.USERS],
   routesMap[RouteKeys.PROFILE]
   //
   ,routesMap[RouteKeys.TEST]

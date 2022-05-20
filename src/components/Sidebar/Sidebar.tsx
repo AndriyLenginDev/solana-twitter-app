@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { useAppRoutes } from '@/hooks/useAppRoutes';
 import { RouteKeys } from '@/router';
 import HomeIcon from '@/components/icons/HomeIcon';
+import UsersIcon from '@/components/icons/UsersIcon';
 import ProfileIcon from '@/components/icons/ProfileIcon';
 //
 import CircleIcon from '@/components/icons/CircleIcon';
@@ -17,6 +18,7 @@ const Sidebar: FC = () => {
 
   const iconsMap = new Map<RouteKeys, ComponentType>([
     [RouteKeys.HOME, HomeIcon],
+    [RouteKeys.USERS, UsersIcon],
     [RouteKeys.PROFILE, ProfileIcon],
     //
     [RouteKeys.TEST, CircleIcon]

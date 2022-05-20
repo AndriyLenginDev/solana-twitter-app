@@ -1,0 +1,11 @@
+.form {
+  &__wrapper {
+    @apply py-4 px-6 border-b;
+  }
+  &__footer {
+    @apply flex items-center justify-end mt-1;
+  }
+  &__counter {
+    @apply text-gray-400 mr-6;
+  }
+}

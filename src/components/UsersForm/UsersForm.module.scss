@@ -1,0 +1,11 @@
+.form {
+  &__wrapper {
+    @apply flex py-4 px-6 border-b relative;
+  }
+  &__input {
+    @apply pl-11;
+  }
+  &__btn {
+    @apply ml-4 flex-shrink-0;
+  }
+}

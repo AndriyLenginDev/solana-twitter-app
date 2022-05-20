@@ -1,8 +1,13 @@
 import React, { FC, useMemo, useState } from 'react';
-import Button from '@/components/general/Button/Button';
 import TextArea from '@/components/general/TextArea/TextArea';
+import Button from '@/components/general/Button/Button';
+import classes from './TweetForm.module.scss';
 
-const TweetForm: FC = () => {
+export interface TweetFormProps {
+  className?: string;
+}
+
+const TweetForm: FC<TweetFormProps> = ({ className }) => {
   const MAX_CHARS = 280;
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,15 +31,15 @@ const TweetForm: FC = () => {
   };
 
   return (
-    <form className="py-4 px-6 border-b">
+    <form className={[classes.form__wrapper, className].join(' ')}>
       <TextArea
         autoresize
         placeholder="Enter tweet"
         value={text}
         onChange={handleTextChange}
       />
-      <div className="flex items-center justify-end mt-1">
-        <span className="text-gray-400 text-l mr-6">{charsLeft} left</span>
+      <div className={classes.form__footer}>
+        <span className={classes.form__counter}>{charsLeft} left</span>
         <Button
           loading={loading}
           onClick={send}>
