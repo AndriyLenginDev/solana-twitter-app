@@ -1,16 +1,16 @@
-import React, { FC, ComponentType, Suspense, SVGProps } from 'react';
+import React, { FC, ComponentType, SVGProps } from 'react';
 import classes from './Sidebar.module.scss';
 import { NavLink } from 'react-router-dom';
 import { useAppRoutes } from '@/hooks/useAppRoutes';
 import { RouteKeys } from '@/router';
-import CircleIcon from '@/components/icons/CircleIcon';
 import HomeIcon from '@/components/icons/HomeIcon';
 import ProfileIcon from '@/components/icons/ProfileIcon';
+//
+import CircleIcon from '@/components/icons/CircleIcon';
 
-interface ILinkClassNameArgs { isActive: boolean }
-
-// const HomeIcon = React.lazy(() => import('@/components/icons/HomeIcon'));
-// const ProfileIcon = React.lazy(() => import('@/components/icons/ProfileIcon'));
+interface ILinkClassNameArgs {
+  isActive: boolean;
+}
 
 const Sidebar: FC = () => {
   const routes = useAppRoutes();
@@ -19,7 +19,7 @@ const Sidebar: FC = () => {
     [RouteKeys.HOME, HomeIcon],
     [RouteKeys.PROFILE, ProfileIcon],
     //
-    [RouteKeys.TEST, React.lazy(() => import('@/components/icons/CircleIcon'))]
+    [RouteKeys.TEST, CircleIcon]
   ]);
 
   const linkClassName = ({ isActive }: ILinkClassNameArgs): string => {
@@ -36,9 +36,7 @@ const Sidebar: FC = () => {
               <NavLink
                 to={route.path}
                 className={linkClassName}>
-                <Suspense fallback={<CircleIcon />}>
-                  <Icon className={classes.link__icon} />
-                </Suspense>
+                <Icon className={classes.link__icon} />
                 {route.name}
               </NavLink>
             </li>

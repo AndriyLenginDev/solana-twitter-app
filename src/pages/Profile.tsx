@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import Header from '@/components/Header/Header';
+import Header from '@/components/Header';
 
 const Profile: FC = () => {
   return (

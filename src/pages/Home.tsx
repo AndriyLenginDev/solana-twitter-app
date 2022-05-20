@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
-import Header from '@/components/Header/Header';
+import Header from '@/components/Header';
+import TweetForm from "@/components/TweetForm/TweetForm";
 
 const Home: FC = () => {
   return (
-    <div>
+    <>
       <Header>Home</Header>
-    </div>
+      <TweetForm />
+    </>
   );
 };
 
