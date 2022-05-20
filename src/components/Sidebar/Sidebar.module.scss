@@ -1,12 +1,20 @@
 .sidebar {
-  @apply flex flex-col items-center md:items-stretch space-y-2 md:space-y-4 py-4 md:py-8 md:pl-4 md:pr-8 fixed w-20 md:w-64;
+  @apply space-y-2 md:space-y-4 py-4 md:py-8 md:pl-4 md:pr-8 fixed w-20 md:w-64;
+
+  &__list {
+    @apply flex flex-col items-center md:items-stretch;
+  }
 
   &__link {
     @apply rounded-md hover:bg-gray-100 p-3 md:w-full inline-flex items-center space-x-4 text-gray-400 text-xl;
 
     .link {
       &__icon {
-        @apply text-current text-3xl mr-2;
+        @apply text-current text-3xl;
+      }
+
+      &__text {
+        @apply hidden md:block ml-2;
       }
     }
 

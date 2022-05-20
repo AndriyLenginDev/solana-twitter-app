@@ -30,7 +30,7 @@ const Sidebar: FC = () => {
 
   return (
     <aside className={classes.sidebar}>
-      <ul>
+      <ul className={classes.sidebar__list}>
         {routes.map((route) => {
           const Icon = iconsMap.get(route.key) as ComponentType<SVGProps<SVGSVGElement>>;
           return (
@@ -39,7 +39,7 @@ const Sidebar: FC = () => {
                 to={route.path}
                 className={linkClassName}>
                 <Icon className={classes.link__icon} />
-                {route.name}
+                <span className={classes.link__text}>{route.name}</span>
               </NavLink>
             </li>
           );

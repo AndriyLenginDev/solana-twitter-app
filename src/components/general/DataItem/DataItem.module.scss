@@ -1,0 +1,11 @@
+.item {
+  @apply px-6 py-4 border-b flex items-center;
+
+  &__icon {
+    @apply text-2xl text-gray-400 mr-3 flex-shrink-0;
+  }
+
+  &__content {
+    @apply break-all;
+  }
+}

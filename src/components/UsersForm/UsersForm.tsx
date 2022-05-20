@@ -1,4 +1,4 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import Input from '@/components/general/Input/Input';
 import Button from '@/components/general/Button/Button';
 import classes from './UsersForm.module.scss';
@@ -33,8 +33,8 @@ const UsersForm: FC<UsersFormProps> = ({ className }) => {
 
   return (
     <form className={[classes.form__wrapper, className].join(' ')}>
-      <div className="absolute left-0 top-0 h-full flex items-center pl-9">
-        <KeyIcon className="text-2xl text-gray-400" />
+      <div className={classes.key__wrapper}>
+        <KeyIcon className={classes.key__icon} />
       </div>
       <Input
         className={classes.form__input}
