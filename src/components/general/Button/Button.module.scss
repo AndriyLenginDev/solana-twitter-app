@@ -32,4 +32,8 @@
   &__txt {
     @apply flex-grow font-bold whitespace-nowrap;
   }
+
+  &[disabled] {
+    @apply opacity-70 hover:bg-blue-500 cursor-not-allowed;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import Input from '@/components/general/Input/Input';
 import Button from '@/components/general/Button/Button';
 import classes from './UsersForm.module.scss';
@@ -16,13 +16,19 @@ const UsersForm: FC<UsersFormProps> = ({ className }) => {
     setKey(e.target.value);
   };
 
+  const findDisabled = useMemo<boolean>(() => {
+    return !key.length;
+  }, [key]);
+
   const find = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    console.log('find', key);
     setLoading(true);
     setTimeout(() => {
+      setKey('');
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (
@@ -37,6 +43,7 @@ const UsersForm: FC<UsersFormProps> = ({ className }) => {
         onChange={handleTextChange}
       />
       <Button
+        disabled={findDisabled}
         className={classes.form__btn}
         loading={loading}
         onClick={find}>

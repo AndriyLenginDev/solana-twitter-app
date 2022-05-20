@@ -21,13 +21,19 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
     return MAX_CHARS - text.length;
   }, [text]);
 
+  const sendDisabled = useMemo<boolean>(() => {
+    return !text.length;
+  }, [text]);
+
   const send = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
+    console.log('send', text);
     setLoading(true);
     setTimeout(() => {
+      setText('');
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (
@@ -41,6 +47,7 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
       <div className={classes.form__footer}>
         <span className={classes.form__counter}>{charsLeft} left</span>
         <Button
+          disabled={sendDisabled}
           loading={loading}
           onClick={send}>
           Send
