@@ -5,7 +5,7 @@ import Loading from '@/components/Loading';
 import { useAppRoutes } from '@/hooks/useAppRoutes';
 
 const AppRouter: FC = () => {
-  const routes = useAppRoutes();
+  const [routes] = useAppRoutes();
 
   return (
     <Suspense fallback={<Loading />}>

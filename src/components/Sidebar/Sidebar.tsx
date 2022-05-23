@@ -8,13 +8,14 @@ import UsersIcon from '@/components/icons/UsersIcon';
 import ProfileIcon from '@/components/icons/ProfileIcon';
 //
 import CircleIcon from '@/components/icons/CircleIcon';
+import {WalletMultiButton} from "@solana/wallet-adapter-react-ui";
 
 interface ILinkClassNameArgs {
   isActive: boolean;
 }
 
 const Sidebar: FC = () => {
-  const routes = useAppRoutes();
+  const [routes] = useAppRoutes();
 
   const iconsMap = new Map<RouteKeys, ComponentType>([
     [RouteKeys.HOME, HomeIcon],
@@ -45,6 +46,7 @@ const Sidebar: FC = () => {
           );
         })}
       </ul>
+      <WalletMultiButton />
     </aside>
   );
 };

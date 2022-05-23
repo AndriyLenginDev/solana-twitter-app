@@ -1,19 +1,21 @@
-import React, { FC } from 'react';
-import Header from '@/components/Header';
+import React, { FC, useMemo } from 'react';
 import DataItem from '@/components/general/DataItem/DataItem';
 import KeyIcon from '@/components/icons/KeyIcon';
 import TweetForm from '@/components/TweetForm/TweetForm';
-import { PublicKey } from '@solana/web3.js';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const Profile: FC = () => {
-  const publicKey = new PublicKey('8zAvCGuctj7KdPhPCcr9UhpfsWBfC92Q9GaU6ZhL1TD6');
+  const { publicKey } = useWallet();
+
+  const accountAddress = useMemo<string>(() => {
+    return publicKey ? publicKey.toBase58() : '';
+  }, [publicKey]);
 
   return (
     <>
-      <Header>Profile</Header>
       <DataItem
         Icon={KeyIcon}
-        content={publicKey.toBase58()}
+        content={accountAddress}
       />
       <TweetForm />
     </>
