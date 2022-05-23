@@ -23,3 +23,74 @@ main {
     @apply opacity-0 transition-opacity ease-in-out duration-150;
   }
 }
+
+.wallet-adapter-dropdown {
+  @apply flex w-full;
+
+  .wallet-adapter-dropdown-list {
+    @apply w-full bg-white shadow-md rounded-md #{!important};
+
+    //&.wallet-adapter-dropdown-list-active {
+    //
+    //}
+
+    .wallet-adapter-dropdown-list-item {
+      @apply text-gray-700 hover:bg-gray-200;
+    }
+  }
+}
+
+.wallet-adapter-button {
+  @apply box-border w-full px-3.5 h-12 rounded-md #{!important};
+
+  .wallet-adapter-button-start-icon {
+    @apply w-7 h-7 mr-4;
+    img {
+      @apply w-7 h-7;
+    }
+  }
+
+  &.wallet-adapter-button-trigger {
+    @apply bg-white hover:bg-gray-100 text-gray-700 #{!important};
+  }
+}
+
+.wallet-adapter-modal-wrapper {
+  @apply bg-white rounded-md shadow-md #{!important};
+
+  .wallet-adapter-modal-button-close {
+    @apply bg-gray-200 top-2 right-2 #{!important};
+    svg {
+      @apply fill-gray-400;
+    }
+
+    &:hover svg {
+      @apply fill-blue-500;
+    }
+  }
+
+  .wallet-adapter-modal-title {
+    @apply text-gray-700 text-xl py-10 px-16 #{!important};
+  }
+
+  .wallet-adapter-button {
+    @apply text-gray-700 #{!important};
+    &:not([disabled]) {
+      @apply hover:bg-gray-100;
+    }
+
+    span {
+      @apply opacity-100 text-gray-400 #{!important};
+    }
+  }
+
+  .wallet-adapter-modal-list-more {
+    span {
+      @apply text-gray-700 #{!important};
+    }
+
+    svg {
+      @apply fill-gray-700;
+    }
+  }
+}

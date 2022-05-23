@@ -10,7 +10,7 @@ const Header: FC<HeaderProps> = ({ children, className, ...props }) => {
     <header
       className={['py-4 px-6 border-b', className].join(' ')}
       {...props}>
-      <div className="text-gray-400 text-xl">{children}</div>
+      <div className="text-gray-700 text-xl">{children}</div>
     </header>
   );
 };

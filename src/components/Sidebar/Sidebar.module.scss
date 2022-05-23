@@ -6,7 +6,7 @@
   }
 
   &__link {
-    @apply rounded-md hover:bg-gray-100 p-3 md:w-full inline-flex items-center space-x-4 text-gray-400 text-xl;
+    @apply rounded-md hover:bg-gray-100 p-3 md:w-full inline-flex items-center space-x-4 text-gray-700 text-xl;
 
     .link {
       &__icon {
