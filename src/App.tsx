@@ -1,5 +1,4 @@
 import React, { FC, useMemo } from 'react';
-import SolanaContainer from '@/containers/SolanaContainer';
 import Header from '@/components/Header';
 import AppRouter from '@/components/AppRouter';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -14,13 +13,11 @@ const App: FC = () => {
 
   return (
     <div className="w-full max-w-3xl lg:max-w-4xl mx-auto">
-      <SolanaContainer>
-        <Sidebar />
-        <main>
-          <Header>{pageTitle}</Header>
-          <AppRouter />
-        </main>
-      </SolanaContainer>
+      <Sidebar />
+      <main>
+        <Header>{pageTitle}</Header>
+        <AppRouter />
+      </main>
     </div>
   );
 };
