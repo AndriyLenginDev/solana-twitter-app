@@ -25,14 +25,20 @@ main {
 }
 
 .wallet-adapter-dropdown {
-  @apply flex w-full;
+  @apply fixed md:relative bottom-6 md:bottom-auto inset-x-0 mx-auto flex w-5/6 md:w-full #{!important};
+
+  .wallet-adapter-button {
+    &.wallet-adapter-button-trigger {
+      @apply static w-full md:justify-start #{!important};
+    }
+  }
 
   .wallet-adapter-dropdown-list {
-    @apply w-full bg-white shadow-md rounded-md #{!important};
+    @apply w-full bg-white shadow-md rounded-md top-auto bottom-full md:top-full md:bottom-auto #{!important};
 
-    //&.wallet-adapter-dropdown-list-active {
-    //
-    //}
+    &.wallet-adapter-dropdown-list-active {
+      @apply transform -translate-y-3 md:translate-y-3;
+    }
 
     .wallet-adapter-dropdown-list-item {
       @apply text-gray-700 hover:bg-gray-200;
@@ -41,7 +47,7 @@ main {
 }
 
 .wallet-adapter-button {
-  @apply box-border w-full px-3.5 h-12 rounded-md #{!important};
+  @apply box-border w-full px-3.5 h-10 rounded-md #{!important};
 
   .wallet-adapter-button-start-icon {
     @apply w-7 h-7 mr-4;
@@ -51,7 +57,7 @@ main {
   }
 
   &.wallet-adapter-button-trigger {
-    @apply bg-white hover:bg-gray-100 text-gray-700 #{!important};
+    @apply fixed w-5/6 md:w-full inset-x-0 mx-auto bottom-6 md:static bg-blue-500 hover:bg-blue-700 justify-center #{!important};
   }
 }
 

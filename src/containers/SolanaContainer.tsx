@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useMemo } from 'react';
-import { Adapter, WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { clusterApiUrl } from '@solana/web3.js';
+import { Adapter } from '@solana/wallet-adapter-base';
 import {
   PhantomWalletAdapter,
   SlopeWalletAdapter,
@@ -8,16 +7,14 @@ import {
 } from '@solana/wallet-adapter-wallets';
 import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
 import { WalletModalProvider } from '@solana/wallet-adapter-react-ui';
+import { useAppCluster } from '@/hooks/useAppCluster';
 
 export interface SolanaContainerProps {
   children: ReactNode;
 }
 
 const SolanaContainer: FC<SolanaContainerProps> = ({ children }) => {
-  const network = (process.env.REACT_APP_NETWORK ||
-    WalletAdapterNetwork.Devnet) as WalletAdapterNetwork;
-
-  const endpoint = useMemo<string>(() => clusterApiUrl(network), [network]);
+  const { network, endpoint } = useAppCluster();
 
   const wallets = useMemo<Adapter[]>(
     () => [
