@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { Provider } from 'react-redux';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import store, { runSagas } from '@/store';
 
 import '@solana/wallet-adapter-react-ui/styles.css';
