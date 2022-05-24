@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/solana-twitter-app/static/css/main.373f99b5.css",
-    "main.js": "/solana-twitter-app/static/js/main.eb8fd902.js",
+    "main.js": "/solana-twitter-app/static/js/main.a812ee52.js",
     "static/js/578.3f0d92fa.chunk.js": "/solana-twitter-app/static/js/578.3f0d92fa.chunk.js",
     "static/js/828.a9f2a9a4.chunk.js": "/solana-twitter-app/static/js/828.a9f2a9a4.chunk.js",
     "static/js/299.b18e0a8c.chunk.js": "/solana-twitter-app/static/js/299.b18e0a8c.chunk.js",
@@ -17,7 +17,7 @@
     "static/js/114.a66f83c9.chunk.js": "/solana-twitter-app/static/js/114.a66f83c9.chunk.js",
     "index.html": "/solana-twitter-app/index.html",
     "main.373f99b5.css.map": "/solana-twitter-app/static/css/main.373f99b5.css.map",
-    "main.eb8fd902.js.map": "/solana-twitter-app/static/js/main.eb8fd902.js.map",
+    "main.a812ee52.js.map": "/solana-twitter-app/static/js/main.a812ee52.js.map",
     "578.3f0d92fa.chunk.js.map": "/solana-twitter-app/static/js/578.3f0d92fa.chunk.js.map",
     "828.a9f2a9a4.chunk.js.map": "/solana-twitter-app/static/js/828.a9f2a9a4.chunk.js.map",
     "299.b18e0a8c.chunk.js.map": "/solana-twitter-app/static/js/299.b18e0a8c.chunk.js.map",
@@ -33,6 +33,6 @@
   },
   "entrypoints": [
     "static/css/main.373f99b5.css",
-    "static/js/main.eb8fd902.js"
+    "static/js/main.a812ee52.js"
   ]
 }
