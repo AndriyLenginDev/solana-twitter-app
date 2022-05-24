@@ -1,5 +1,6 @@
 {
   "name": "solana-twitter-app",
+  "homepage": "https://andriylengindev.github.io/solana-twitter-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -34,7 +35,9 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
-    "format:fix": "npx prettier --write ./src"
+    "format:fix": "npx prettier --write ./src",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -63,6 +66,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-saga": "^0.10.5",
     "autoprefixer": "^10.4.7",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.4.14",
     "prettier": "^2.1.0",
     "prettier-config-standard": "^1.0.1",

@@ -5,8 +5,6 @@ import AppRouter from '@/components/AppRouter';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useAppRoutes } from '@/hooks/useAppRoutes';
 
-require('@solana/wallet-adapter-react-ui/styles.css');
-
 const App: FC = () => {
   const [, currentRoute] = useAppRoutes();
 
