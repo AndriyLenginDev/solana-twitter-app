@@ -1,4 +1,4 @@
-# Demo - [Solana twitter DAPP](https://andriylengindev.github.io/solana-twitter-app/).
+# Demo - [Solana twitter DAPP](https://membranegame.github.io/solana-twitter-app/).
 
 ## Available Scripts
 
