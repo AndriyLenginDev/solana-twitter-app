@@ -1,4 +1,6 @@
+import { all, spawn } from 'typed-redux-saga';
+import { tweetsSaga } from '@/store/sagas/tweets';
+
 export default function* rootSaga() {
-  console.log('Run sagas');
-  yield;
-};
+  yield all([tweetsSaga].map(spawn));
+}

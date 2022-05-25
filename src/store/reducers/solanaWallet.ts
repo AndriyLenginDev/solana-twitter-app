@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PublicKey } from '@solana/web3.js';
 import { BN } from '@project-serum/anchor';
 
-export interface ISolanaWallet {
+export interface ISolanaWalletState {
   connected: boolean;
   address: PublicKey;
   balance: BN;
 }
 
-export const initialState: ISolanaWallet = {
+export const initialState: ISolanaWalletState = {
   connected: false,
   address: new PublicKey(0),
   balance: new BN(0)

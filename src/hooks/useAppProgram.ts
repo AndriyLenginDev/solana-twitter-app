@@ -12,6 +12,10 @@ export interface AppProgram {
   program: Program;
 }
 
+let appProgram: AppProgram | null = null;
+
+export const getAppProgram = (): AppProgram => appProgram as AppProgram;
+
 export const useAppProgram = (): AppProgram => {
   const preflightCommitment = 'processed';
   const commitment = 'processed';
@@ -33,10 +37,12 @@ export const useAppProgram = (): AppProgram => {
     [programID, provider]
   );
 
-  return {
+  appProgram = {
     wallet,
     connection,
     provider,
     program
   };
+
+  return appProgram;
 };
