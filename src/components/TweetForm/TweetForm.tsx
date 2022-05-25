@@ -21,9 +21,15 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
     return MAX_CHARS - text.length;
   }, [text]);
 
+  const charsLeftColor = useMemo<string>(() => {
+    if (charsLeft < 0) return 'text-red-500';
+    if (charsLeft <= 10) return 'text-yellow-500';
+    return 'text-gray-400';
+  }, [charsLeft]);
+
   const sendDisabled = useMemo<boolean>(() => {
-    return !text.length;
-  }, [text]);
+    return !text.length || charsLeft < 0;
+  }, [text, charsLeft]);
 
   const send = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -45,7 +51,7 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
         onChange={handleTextChange}
       />
       <div className={classes.form__footer}>
-        <span className={classes.form__counter}>{charsLeft} left</span>
+        <span className={[classes.form__counter, charsLeftColor].join(' ')}>{charsLeft} left</span>
         <Button
           disabled={sendDisabled}
           loading={loading}

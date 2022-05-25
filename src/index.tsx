@@ -9,9 +9,7 @@ import store, { runSagas } from '@/store';
 import '@solana/wallet-adapter-react-ui/styles.css';
 import '@/assets/index.scss';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-  // <React.StrictMode>
+const Root = () => (
   <SolanaContainer>
     <Provider store={store}>
       <HashRouter>
@@ -19,7 +17,13 @@ root.render(
       </HashRouter>
     </Provider>
   </SolanaContainer>
-  // </React.StrictMode>
+);
+
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>
 );
 
 runSagas();
