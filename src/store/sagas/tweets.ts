@@ -1,15 +1,12 @@
 import { all, put, spawn, takeLeading, call } from 'typed-redux-saga';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { tweetsActions } from '@/store/reducers/tweets';
-import TweetsService from '@/web3';
 import { ITweet } from '@/models/tweet';
+import { getTweets } from '@/web3';
 
-const getTweets = async (filters = []): Promise<ITweet[]> => {
-  return await TweetsService.getTweets(filters);
-};
-
-export function* handleGetTweets(): Generator {
+export function* handleGetTweets(action: PayloadAction<any[] | undefined>): Generator {
   yield put(tweetsActions.setLoading(true));
-  const tweets = yield call(getTweets);
+  const tweets = yield call(getTweets, action.payload);
   yield put(tweetsActions.setTweets(tweets as ITweet[]));
   yield put(tweetsActions.setLoading(false));
 }

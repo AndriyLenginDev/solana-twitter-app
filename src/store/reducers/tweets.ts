@@ -27,7 +27,7 @@ const tweetsSlice = createSlice({
       state.loading = action.payload;
       return state;
     },
-    getTweets(state) {
+    getTweets(state, action: PayloadAction<any[] | undefined>) {
       return state;
     }
   }
