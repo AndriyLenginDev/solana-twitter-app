@@ -6,10 +6,12 @@ import { useWallet } from '@solana/wallet-adapter-react';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { tweetsActions } from '@/store/reducers/tweets';
+import { selectSortedTweets } from '@/store/reducers/tweets/selectors';
 
 const Home: FC = () => {
   const { connected } = useWallet();
-  const { tweets, loading } = useAppSelector((state) => state.tweets);
+  const tweetsLoading = useAppSelector((state) => state.tweets.tweetsLoading);
+  const tweets = useAppSelector(selectSortedTweets);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -27,7 +29,7 @@ const Home: FC = () => {
       )}
       <TweetList
         tweets={tweets}
-        loading={loading}
+        loading={tweetsLoading}
       />
     </>
   );

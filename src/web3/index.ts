@@ -1,13 +1,27 @@
 import { getAppProgram } from '@/hooks/useAppProgram';
 import { ITweet, Tweet } from '@/models/tweet';
-
-// export const getTweets = async (filters: any[] = []): Promise<ITweet[]> => {
-//   const { program } = getAppProgram();
-//
-//   const tweets = await program.account.tweet.all(filters);
-//   return tweets.map((tweet) => new Tweet(tweet.publicKey, tweet.account));
-// };
+import { web3 } from '@project-serum/anchor';
 
 export const getTweets = async (filters: any[] = []): Promise<ITweet[]> => {
-  return new Promise((res) => setTimeout(res.bind(null, []), 1000));
+  const { program } = getAppProgram();
+
+  const tweets = await program.account.tweet.all(filters);
+  return tweets.map((tweet) => new Tweet(tweet.publicKey, tweet.account));
+};
+
+export const sendTweet = async (content: string, topic: string = ''): Promise<ITweet> => {
+  const { wallet, program } = getAppProgram();
+  const tweet = web3.Keypair.generate();
+
+  await program.rpc.sendTweet(topic, content, {
+    accounts: {
+      author: wallet.publicKey,
+      tweet: tweet.publicKey,
+      systemProgram: web3.SystemProgram.programId
+    },
+    signers: [tweet]
+  });
+
+  const tweetAccount = await program.account.tweet.fetch(tweet.publicKey);
+  return new Tweet(tweet.publicKey, tweetAccount);
 };

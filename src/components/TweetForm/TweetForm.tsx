@@ -2,6 +2,9 @@ import React, { FC, useMemo, useState } from 'react';
 import TextArea from '@/components/general/TextArea/TextArea';
 import Button from '@/components/general/Button/Button';
 import classes from './TweetForm.module.scss';
+import { useAppSelector } from '@/hooks/useAppSelector';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { tweetsActions } from '@/store/reducers/tweets';
 
 export interface TweetFormProps {
   className?: string;
@@ -9,17 +12,17 @@ export interface TweetFormProps {
 
 const TweetForm: FC<TweetFormProps> = ({ className }) => {
   const MAX_CHARS = 280;
-
-  const [loading, setLoading] = useState<boolean>(false);
-  const [text, setText] = useState<string>('');
+  const { sendLoading } = useAppSelector((state) => state.tweets);
+  const dispatch = useAppDispatch();
+  const [content, setContent] = useState<string>('');
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    setContent(e.target.value);
   };
 
   const charsLeft = useMemo<number>(() => {
-    return MAX_CHARS - text.length;
-  }, [text]);
+    return MAX_CHARS - content.length;
+  }, [content]);
 
   const charsLeftColor = useMemo<string>(() => {
     if (charsLeft < 0) return 'text-red-500';
@@ -28,18 +31,14 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
   }, [charsLeft]);
 
   const sendDisabled = useMemo<boolean>(() => {
-    return !text.length || charsLeft < 0;
-  }, [text, charsLeft]);
+    return !content.length || charsLeft < 0;
+  }, [content, charsLeft]);
 
   const send = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    console.log('send', text);
-    setLoading(true);
-    setTimeout(() => {
-      setText('');
-      setLoading(false);
-    }, 1000);
+    dispatch(tweetsActions.sendTweet({ content }));
+    setContent('');
   };
 
   return (
@@ -47,14 +46,14 @@ const TweetForm: FC<TweetFormProps> = ({ className }) => {
       <TextArea
         autoresize
         placeholder="Enter tweet"
-        value={text}
+        value={content}
         onChange={handleTextChange}
       />
       <div className={classes.form__footer}>
         <span className={[classes.form__counter, charsLeftColor].join(' ')}>{charsLeft} left</span>
         <Button
           disabled={sendDisabled}
-          loading={loading}
+          loading={sendLoading}
           onClick={send}>
           Send
         </Button>

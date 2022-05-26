@@ -2,11 +2,11 @@ import { AnchorWallet, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { useAppCluster } from '@/hooks/useAppCluster';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { useMemo } from 'react';
-import { AnchorProvider, Program, Provider } from '@project-serum/anchor';
+import { AnchorProvider, Idl, Program, Provider } from '@project-serum/anchor';
 import idl from '@/web3/idl/solana_twitter.json';
 
 export interface AppProgram {
-  wallet?: AnchorWallet;
+  wallet: AnchorWallet;
   connection: Connection;
   provider: Provider;
   program: Program;
@@ -19,7 +19,7 @@ export const getAppProgram = (): AppProgram => appProgram as AppProgram;
 export const useAppProgram = (): AppProgram => {
   const preflightCommitment = 'processed';
   const commitment = 'processed';
-  const wallet = useAnchorWallet();
+  const wallet = useAnchorWallet() as AnchorWallet;
   const { endpoint } = useAppCluster();
 
   const programID = useMemo<PublicKey>(
@@ -33,7 +33,7 @@ export const useAppProgram = (): AppProgram => {
     [connection, wallet]
   );
   const program = useMemo<Program>(
-    () => new Program(idl, programID, provider),
+    () => new Program(idl as Idl, programID, provider),
     [programID, provider]
   );
 

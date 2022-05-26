@@ -1,14 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITweet } from '@/models/tweet';
+import {
+  IGetTweetsAction,
+  ISendTweetAction,
+  ISetTweetsAction
+} from '@/store/reducers/tweets/types';
 
 export interface ITweetsState {
   tweets: ITweet[];
-  loading: boolean;
+  tweetsLoading: boolean;
+  sendLoading: boolean;
 }
 
 export const initialState: ITweetsState = {
   tweets: [],
-  loading: false
+  tweetsLoading: false,
+  sendLoading: false
 };
 
 export const tweetsSliceName = 'tweets';
@@ -19,15 +26,22 @@ const tweetsSlice = createSlice({
     resetState() {
       return initialState;
     },
-    setTweets(state, action: PayloadAction<ITweet[]>) {
+    setTweets(state, action: ISetTweetsAction) {
       state.tweets = action.payload;
       return state;
     },
-    setLoading(state, action: PayloadAction<boolean>) {
-      state.loading = action.payload;
+    setTweetsLoading(state, action: PayloadAction<boolean>) {
+      state.tweetsLoading = action.payload;
       return state;
     },
-    getTweets(state, action: PayloadAction<any[] | undefined>) {
+    getTweets(state, action: IGetTweetsAction) {
+      return state;
+    },
+    setSendLoading(state, action: PayloadAction<boolean>) {
+      state.sendLoading = action.payload;
+      return state;
+    },
+    sendTweet(state, action: ISendTweetAction) {
       return state;
     }
   }

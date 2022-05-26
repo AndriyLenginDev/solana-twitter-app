@@ -21,9 +21,9 @@ const Root = () => (
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Root />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 runSagas();
