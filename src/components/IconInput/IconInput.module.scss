@@ -1,0 +1,15 @@
+.input {
+  &__wrapper {
+    @apply relative flex items-center;
+    .icon {
+      @apply absolute text-gray-400 ml-2 flex-shrink-0 text-xl;
+    }
+    .field {
+      @apply pl-8;
+
+      &[disabled] {
+        @apply text-blue-500;
+      }
+    }
+  }
+}

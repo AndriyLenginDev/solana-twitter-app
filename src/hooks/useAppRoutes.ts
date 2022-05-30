@@ -1,5 +1,5 @@
 import { matchRoutes, useLocation } from 'react-router-dom';
-import { IRoute, privateRoutes, publicRoutes } from '@/router';
+import { IRoute, privateRoutes, publicRoutes, routes as allRoutes } from '@/router';
 import { useMemo } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 
@@ -10,7 +10,7 @@ export const useAppRoutes = (): [IRoute[], IRoute | null] => {
   }, [connected]);
 
   const location = useLocation();
-  const routeMatch = matchRoutes(routes, location);
+  const routeMatch = matchRoutes(allRoutes, location);
 
   if (routeMatch) {
     const [{ route }] = routeMatch;

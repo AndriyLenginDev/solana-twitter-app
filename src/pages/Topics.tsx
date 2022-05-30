@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import UsersForm from '@/components/UsersForm/UsersForm';
+import TopicsForm from '@/components/TopicsForm/TopicsForm';
+import TweetForm from '@/components/TweetForm/TweetForm';
 import TweetList from '@/components/TweetList/TweetList';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
@@ -7,16 +8,15 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useParams } from 'react-router-dom';
 
-const Users: FC = () => {
+const Topics: FC = () => {
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.tweets.loading);
   const tweets = useAppSelector(selectSortedTweets);
-  const { publicKey } = useParams();
+  const { topic } = useParams();
 
   useEffect(() => {
-    if (publicKey) {
-
-      // TODO: use filter by "publicKey"
+    if (topic) {
+      // TODO: use filter by "topic"
       dispatch(
         tweetsActions.getTweets([
           /* filters */
@@ -26,10 +26,11 @@ const Users: FC = () => {
     return () => {
       dispatch(tweetsActions.setTweets([]));
     };
-  }, [dispatch, publicKey]);
+  }, [dispatch, topic]);
   return (
     <>
-      <UsersForm publicKeyParam={publicKey} />
+      <TopicsForm topicParam={topic} />
+      {topic && <TweetForm forcedTopic={topic} />}
       <TweetList
         tweets={tweets}
         loading={loading}
@@ -38,4 +39,4 @@ const Users: FC = () => {
   );
 };
 
-export default Users;
+export default Topics;

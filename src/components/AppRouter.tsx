@@ -14,8 +14,15 @@ const AppRouter: FC = () => {
           <Route
             path={route.path}
             element={<route.component />}
-            key={route.key}
-          />
+            key={route.key}>
+            {route.nested.map((nested) => (
+              <Route
+                path={nested.path}
+                element={<nested.component />}
+                key={nested.key}
+              />
+            ))}
+          </Route>
         ))}
         {/*prettier-ignore*/}
         <Route path="*" element={<Navigate replace to={RoutePaths.HOME} />} />

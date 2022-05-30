@@ -1,61 +1,61 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
-import Input from '@/components/general/Input/Input';
+import React, { FC, useEffect, useMemo, useState } from 'react';
+import IconInput from '@/components/IconInput/IconInput';
+import HashIcon from '@/components/icons/HashIcon';
 import Button from '@/components/general/Button/Button';
-import KeyIcon from '@/components/icons/KeyIcon';
-import classes from './UsersForm.module.scss';
+import classes from './TopicsForm.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { RoutePaths } from '@/router';
+import { TOPIC_MAX_CHARS } from '@/web3/constants';
 
-export interface UsersFormProps {
+export interface TopicsFormProps {
   className?: string;
-  publicKeyParam?: string;
+  topicParam?: string;
 }
 
-const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
+const TopicsForm: FC<TopicsFormProps> = ({ className, topicParam }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.tweets.loading);
-  const [key, setKey] = useState<string>(publicKeyParam || '');
+  const [topic, setTopic] = useState<string>(topicParam || '');
 
   useEffect(() => {
-    setKey(publicKeyParam || '');
-  }, [publicKeyParam]);
+    setTopic(topicParam || '');
+  }, [topicParam]);
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKey(e.target.value);
+  const handleTopicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTopic(e.target.value);
   };
 
   const searchDisabled = useMemo<boolean>(() => {
-    return !key.length || publicKeyParam === key;
-  }, [key, publicKeyParam]);
+    // TODO: disable when topics from URL and input are the same
+    return !topic.length;
+  }, [topic]);
 
   const search = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (loading) return;
 
-    // TODO: use filter by "publicKey"
+    // TODO: use filter by "topic"
     dispatch(
       tweetsActions.getTweets([
         /* filters */
       ])
     );
-    navigate(`${RoutePaths.USERS}/${key}`);
+    navigate(`${RoutePaths.TOPICS}/${topic}`);
   };
 
   return (
     <form className={[classes.form__wrapper, className].join(' ')}>
-      <div className={classes.key__wrapper}>
-        <KeyIcon className={classes.key__icon} />
-      </div>
-      <Input
+      <IconInput
         className={classes.form__input}
-        placeholder="Public key"
-        value={key}
-        onChange={handleTextChange}
+        Icon={HashIcon}
+        maxLength={TOPIC_MAX_CHARS}
+        value={topic}
+        onChange={handleTopicChange}
       />
       <Button
         disabled={searchDisabled}
@@ -68,4 +68,4 @@ const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
   );
 };
 
-export default UsersForm;
+export default TopicsForm;

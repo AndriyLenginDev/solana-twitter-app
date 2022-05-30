@@ -1,11 +1,22 @@
 .form {
   &__wrapper {
-    @apply py-4 px-6 border-b;
+    @apply flex flex-col py-4 px-6 border-b;
   }
+
+
   &__footer {
-    @apply flex items-center justify-end mt-1;
-  }
-  &__counter {
-    @apply mr-6;
+    @apply flex md:flex-row flex-wrap items-center justify-end md:justify-between mt-3;
+
+    .topic {
+      @apply w-full md:w-56;
+    }
+
+    .button {
+      @apply flex items-center justify-end mt-3 md:mt-0;
+    }
+
+    .counter {
+      @apply mr-6;
+    }
   }
 }
