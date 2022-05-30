@@ -9,6 +9,7 @@ import { useAppSelector } from '@/hooks/useAppSelector';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { RoutePaths } from '@/router';
 import { TOPIC_MAX_CHARS } from '@/web3/constants';
+import { topicFilter } from '@/web3/filters';
 
 export interface TopicsFormProps {
   className?: string;
@@ -39,12 +40,7 @@ const TopicsForm: FC<TopicsFormProps> = ({ className, topicParam }) => {
 
     if (loading) return;
 
-    // TODO: use filter by "topic"
-    dispatch(
-      tweetsActions.getTweets([
-        /* filters */
-      ])
-    );
+    dispatch(tweetsActions.getTweets([topicFilter(topic)]));
     navigate(`${RoutePaths.TOPICS}/${topic}`);
   };
 

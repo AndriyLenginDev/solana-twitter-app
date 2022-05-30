@@ -63,7 +63,7 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
       const tweet = await sendTweet(content, topic);
       dispatch(tweetsActions.addTweet(tweet));
       setContent('');
-      setTopic('');
+      setTopic(forcedTopic || '');
     } catch (error) {
       // TODO: show error
     } finally {

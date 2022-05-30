@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import Input from '@/components/general/Input/Input';
 import Button from '@/components/general/Button/Button';
 import KeyIcon from '@/components/icons/KeyIcon';
@@ -8,6 +8,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { RoutePaths } from '@/router';
+import { authorFilter } from '@/web3/filters';
 
 export interface UsersFormProps {
   className?: string;
@@ -37,12 +38,7 @@ const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
 
     if (loading) return;
 
-    // TODO: use filter by "publicKey"
-    dispatch(
-      tweetsActions.getTweets([
-        /* filters */
-      ])
-    );
+    dispatch(tweetsActions.getTweets([authorFilter(key)]));
     navigate(`${RoutePaths.USERS}/${key}`);
   };
 

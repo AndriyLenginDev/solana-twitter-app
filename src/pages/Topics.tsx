@@ -7,6 +7,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useParams } from 'react-router-dom';
+import { topicFilter } from '@/web3/filters';
 
 const Topics: FC = () => {
   const dispatch = useAppDispatch();
@@ -16,12 +17,7 @@ const Topics: FC = () => {
 
   useEffect(() => {
     if (topic) {
-      // TODO: use filter by "topic"
-      dispatch(
-        tweetsActions.getTweets([
-          /* filters */
-        ])
-      );
+      dispatch(tweetsActions.getTweets([topicFilter(topic)]));
     }
     return () => {
       dispatch(tweetsActions.setTweets([]));

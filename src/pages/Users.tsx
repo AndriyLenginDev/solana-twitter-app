@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useParams } from 'react-router-dom';
+import { authorFilter } from '@/web3/filters';
 
 const Users: FC = () => {
   const dispatch = useAppDispatch();
@@ -15,13 +16,7 @@ const Users: FC = () => {
 
   useEffect(() => {
     if (publicKey) {
-
-      // TODO: use filter by "publicKey"
-      dispatch(
-        tweetsActions.getTweets([
-          /* filters */
-        ])
-      );
+      dispatch(tweetsActions.getTweets([authorFilter(publicKey)]));
     }
     return () => {
       dispatch(tweetsActions.setTweets([]));

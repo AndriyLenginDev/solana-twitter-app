@@ -13,7 +13,9 @@ export interface TweetCardProps {
 
 const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
   const formatDate = (timestamp: BN): string => {
-    return moment(timestamp.toNumber() * 1000).format('Do MMM YYYY, HH:mm');
+    // TODO: show "fromNow" only if tweet was posted less than 1 day ago
+    // return moment(timestamp.toNumber() * 1000).format('Do MMM YYYY, HH:mm');
+    return moment(timestamp.toNumber() * 1000).fromNow();
   };
 
   const userLink = (publicKey: PublicKey): string => {
