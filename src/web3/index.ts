@@ -33,3 +33,14 @@ export const sendTweet = async (content: string, topic: string = ''): Promise<IT
   const tweetAccount = await program.account.tweet.fetch(tweet.publicKey);
   return new Tweet(tweet.publicKey, tweetAccount);
 };
+
+export const deleteTweet = async (tweet: ITweet) => {
+  const { wallet, program } = getAppProgram();
+
+  await program.rpc.deleteTweet({
+    accounts: {
+      author: wallet.publicKey,
+      tweet: tweet.publicKey
+    }
+  });
+};

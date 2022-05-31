@@ -37,7 +37,7 @@ export class Tweet implements ITweet {
   }
 
   get createdAt() {
-    return moment(this.timestamp.toNumber() * 1000).format('Do MMM YYYY, HH:mm');
+    return moment(this.timestamp.toNumber() * 1000).format('HH:mm, DD MMM YYYY');
   }
 
   get createdAgo() {

@@ -41,7 +41,6 @@ const tweetsSlice = createSlice({
       return state;
     },
     deleteTweet(state, action: IDeleteTweetAction) {
-      state.tweets = state.tweets.filter(tweet => tweet.key !== action.payload.toBase58());
       return state;
     }
   }

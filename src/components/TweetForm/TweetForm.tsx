@@ -1,15 +1,15 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import TextArea from '@/components/general/TextArea/TextArea';
 import IconInput from '@/components/IconInput/IconInput';
 import HashIcon from '@/components/icons/HashIcon';
 import Button from '@/components/general/Button/Button';
+import DataItem from '@/components/general/DataItem/DataItem';
 import classes from './TweetForm.module.scss';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { CONTENT_MAX_CHARS, TOPIC_MAX_CHARS } from '@/web3/constants';
 import { sendTweet } from '@/web3';
-import DataItem from "@/components/general/DataItem/DataItem";
 
 export interface TweetFormProps {
   className?: string;

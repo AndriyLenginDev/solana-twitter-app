@@ -1,10 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
+import EditIcon from '@/components/icons/EditIcon';
+import DeleteIcon from '@/components/icons/DeleteIcon';
 import classes from './TweetCard.module.scss';
 import { ITweet } from '@/models/tweet';
 import { PublicKey } from '@solana/web3.js';
 import { RoutePaths } from '@/router';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { tweetsActions } from '@/store/reducers/tweets';
 
 export interface TweetCardProps {
   tweet: ITweet;
@@ -12,16 +16,32 @@ export interface TweetCardProps {
 
 const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
   const { publicKey } = useWallet();
+  const dispatch = useAppDispatch();
 
-  const authorLink = (author: PublicKey): string => {
-    if (publicKey?.toBase58() === author.toBase58()) {
-      return RoutePaths.PROFILE;
-    }
-    return `${RoutePaths.USERS}/${author.toBase58()}`;
-  };
+  const authorLink = useCallback(
+    (author: PublicKey): string => {
+      if (publicKey?.toBase58() === author.toBase58()) {
+        return RoutePaths.PROFILE;
+      }
+      return `${RoutePaths.USERS}/${author.toBase58()}`;
+    },
+    [publicKey]
+  );
 
   const topicLink = (topic: string): string => {
     return `${RoutePaths.TOPICS}/${topic}`;
+  };
+
+  const isSelfTweet = useMemo<boolean>(() => {
+    return publicKey?.toBase58() === tweet.author.toBase58();
+  }, [publicKey, tweet.author]);
+
+  const editTweet = (e: React.MouseEvent<HTMLButtonElement>) => {
+    alert('Work in progress...');
+  };
+
+  const deleteTweet = (e: React.MouseEvent<HTMLButtonElement>) => {
+    dispatch(tweetsActions.deleteTweet(tweet));
   };
 
   return (
@@ -32,7 +52,17 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
           to={authorLink(tweet.author)}>
           {tweet.authorKey}
         </NavLink>
-        <span className={classes.date}>{tweet.createdAgo}</span>
+        <span className={classes.date}>{tweet.createdAt}</span>
+        {isSelfTweet && (
+          <div className={classes.controls}>
+            <button onClick={editTweet}>
+              <EditIcon />
+            </button>
+            <button onClick={deleteTweet}>
+              <DeleteIcon />
+            </button>
+          </div>
+        )}
       </div>
       <div className={classes.tweet__body}>
         <p className={classes.content}>{tweet.content}</p>
