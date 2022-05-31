@@ -56,7 +56,6 @@ const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
       <Button
         disabled={searchDisabled}
         className={classes.form__btn}
-        loading={loading}
         onClick={search}>
         Search
       </Button>

@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
+import classes from './TweetCard.module.scss';
 import { ITweet } from '@/models/tweet';
 import { BN } from '@project-serum/anchor';
 import moment from 'moment';
@@ -27,23 +28,25 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
   };
 
   return (
-    <div className="px-6 py-4">
-      <div className="mb-2 flex justify-between">
+    <div className={classes.tweet__wrapper}>
+      <div className={classes.tweet__header}>
         <NavLink
-          className="text-gray-700 font-semibold hover:underline"
+          className={classes.author}
           to={userLink(tweet.author)}>
           {truncateStr(tweet.author.toBase58())}
         </NavLink>
-        <span className="text-gray-400 text-sm">{formatDate(tweet.timestamp)}</span>
+        <span className={classes.date}>{formatDate(tweet.timestamp)}</span>
       </div>
-      <p>{tweet.content}</p>
-      {tweet.topic && (
-        <NavLink
-          className="text-blue-500 mt-1 hover:underline"
-          to={topicLink(tweet.topic)}>
-          #{tweet.topic}
-        </NavLink>
-      )}
+      <div className={classes.tweet__body}>
+        <p className={classes.content}>{tweet.content}</p>
+        {tweet.topic && (
+          <NavLink
+            className={classes.topic}
+            to={topicLink(tweet.topic)}>
+            #{tweet.topic}
+          </NavLink>
+        )}
+      </div>
     </div>
   );
 };

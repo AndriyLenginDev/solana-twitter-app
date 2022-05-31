@@ -13,7 +13,7 @@
   }
 
   &__input {
-    @apply pl-11;
+    @apply pl-11 #{!important};
   }
 
   &__btn {

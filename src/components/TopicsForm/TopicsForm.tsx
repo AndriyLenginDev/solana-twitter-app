@@ -56,7 +56,6 @@ const TopicsForm: FC<TopicsFormProps> = ({ className, topicParam }) => {
       <Button
         disabled={searchDisabled}
         className={classes.form__btn}
-        loading={loading}
         onClick={search}>
         Search
       </Button>
