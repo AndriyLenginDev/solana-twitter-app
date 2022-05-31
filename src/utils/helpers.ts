@@ -1,4 +1,4 @@
-export const truncateStr = (str: string, length = 10, separator = '...'): string => {
+export const truncateStr = (str: string, length = 20, separator = '...'): string => {
   if (str.length <= length) {
     return str;
   }

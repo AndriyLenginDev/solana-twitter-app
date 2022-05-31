@@ -2,25 +2,22 @@ import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import classes from './TweetCard.module.scss';
 import { ITweet } from '@/models/tweet';
-import { BN } from '@project-serum/anchor';
-import moment from 'moment';
-import { truncateStr } from '@/utils/helpers';
 import { PublicKey } from '@solana/web3.js';
 import { RoutePaths } from '@/router';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export interface TweetCardProps {
   tweet: ITweet;
 }
 
 const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
-  const formatDate = (timestamp: BN): string => {
-    // TODO: show "fromNow" only if tweet was posted less than 1 day ago
-    // return moment(timestamp.toNumber() * 1000).format('Do MMM YYYY, HH:mm');
-    return moment(timestamp.toNumber() * 1000).fromNow();
-  };
+  const { publicKey } = useWallet();
 
-  const userLink = (publicKey: PublicKey): string => {
-    return `${RoutePaths.USERS}/${publicKey.toBase58()}`;
+  const authorLink = (author: PublicKey): string => {
+    if (publicKey?.toBase58() === author.toBase58()) {
+      return RoutePaths.PROFILE;
+    }
+    return `${RoutePaths.USERS}/${author.toBase58()}`;
   };
 
   const topicLink = (topic: string): string => {
@@ -32,10 +29,10 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
       <div className={classes.tweet__header}>
         <NavLink
           className={classes.author}
-          to={userLink(tweet.author)}>
-          {truncateStr(tweet.author.toBase58())}
+          to={authorLink(tweet.author)}>
+          {tweet.authorKey}
         </NavLink>
-        <span className={classes.date}>{formatDate(tweet.timestamp)}</span>
+        <span className={classes.date}>{tweet.createdAgo}</span>
       </div>
       <div className={classes.tweet__body}>
         <p className={classes.content}>{tweet.content}</p>

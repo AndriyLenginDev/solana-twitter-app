@@ -5,10 +5,16 @@ import { getTweets } from '@/web3';
 import { ITweet } from '@/models/tweet';
 
 export function* handleGetTweets(action: IGetTweetsAction): Generator {
-  yield put(tweetsActions.setLoading(true));
-  const tweets = (yield call(getTweets, action.payload)) as ITweet[];
-  yield put(tweetsActions.setTweets(tweets));
-  yield put(tweetsActions.setLoading(false));
+  try {
+    yield put(tweetsActions.setLoading(true));
+    const tweets = (yield call(getTweets, action.payload)) as ITweet[];
+    yield put(tweetsActions.setTweets(tweets));
+  } catch (error) {
+    // TODO: Handle error
+    console.error(error);
+  } finally {
+    yield put(tweetsActions.setLoading(false));
+  }
 }
 
 export function* watchGetTweets(): Generator {

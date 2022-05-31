@@ -4,11 +4,8 @@ import Button from '@/components/general/Button/Button';
 import KeyIcon from '@/components/icons/KeyIcon';
 import classes from './UsersForm.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { tweetsActions } from '@/store/reducers/tweets';
 import { RoutePaths } from '@/router';
-import { authorFilter } from '@/web3/filters';
 
 export interface UsersFormProps {
   className?: string;
@@ -17,7 +14,6 @@ export interface UsersFormProps {
 
 const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.tweets.loading);
   const [key, setKey] = useState<string>(publicKeyParam || '');
 
@@ -30,7 +26,7 @@ const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
   };
 
   const searchDisabled = useMemo<boolean>(() => {
-    return !key.length || publicKeyParam === key;
+    return !key.length || key === publicKeyParam;
   }, [key, publicKeyParam]);
 
   const search = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,7 +34,6 @@ const UsersForm: FC<UsersFormProps> = ({ className, publicKeyParam }) => {
 
     if (loading) return;
 
-    dispatch(tweetsActions.getTweets([authorFilter(key)]));
     navigate(`${RoutePaths.USERS}/${key}`);
   };
 
