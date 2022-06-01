@@ -1,0 +1,14 @@
+
+.controls {
+  &__wrapper {
+    @apply flex ml-auto;
+    button {
+      @apply flex p-1.5 rounded-full text-gray-400 hover:text-blue-500 hover:bg-gray-100;
+
+      &:not(:first-child) {
+        @apply ml-1;
+      }
+    }
+  }
+}
+
