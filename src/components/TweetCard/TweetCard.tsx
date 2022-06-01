@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, {FC, useCallback, useMemo} from 'react';
 import { NavLink } from 'react-router-dom';
 import TweetControls from '@/components/TweetControls/TweetControls';
 import classes from './TweetCard.module.scss';

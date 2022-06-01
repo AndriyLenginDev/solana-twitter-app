@@ -2,6 +2,7 @@ import { getAppProgram } from '@/hooks/useAppProgram';
 import { ITweet, Tweet } from '@/models/tweet';
 import { web3 } from '@project-serum/anchor';
 import { PublicKey } from '@solana/web3.js';
+import { shallowClone } from '@/utils/helpers';
 
 export const getTweets = async (filters: any[] = []): Promise<ITweet[]> => {
   const { program } = getAppProgram();
@@ -43,4 +44,21 @@ export const deleteTweet = async (tweet: ITweet) => {
       tweet: tweet.publicKey
     }
   });
+};
+
+export const updateTweet = async (
+  tweet: ITweet,
+  topic: string,
+  content: string
+): Promise<ITweet> => {
+  const { wallet, program } = getAppProgram();
+
+  await program.rpc.updateTweet(topic, content, {
+    accounts: {
+      author: wallet.publicKey,
+      tweet: tweet.publicKey
+    }
+  });
+
+  return shallowClone<ITweet>(tweet, { topic, content });
 };

@@ -16,3 +16,12 @@ export const truncateStr = (str: string, length = 20, separator = '...'): string
 export const stopPropagation = (e: React.MouseEvent): void => {
   e.stopPropagation();
 };
+
+export const shallowClone = <T>(obj: T, props: Partial<T> = {}): T => {
+  const copy = Object.create(
+    Object.getPrototypeOf(obj),
+    Object.getOwnPropertyDescriptors(obj)
+  );
+
+  return Object.assign(copy, props);
+};

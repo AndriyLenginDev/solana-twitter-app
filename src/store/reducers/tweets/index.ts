@@ -42,6 +42,13 @@ const tweetsSlice = createSlice({
     },
     deleteTweet(state, action: IDeleteTweetAction) {
       return state;
+    },
+    updateTweet(state, action: IDeleteTweetAction) {
+      const index = state.tweets.findIndex((t) => t.key === action.payload.key);
+      if (index !== -1) {
+        state.tweets[index] = action.payload;
+      }
+      return state;
     }
   }
 });

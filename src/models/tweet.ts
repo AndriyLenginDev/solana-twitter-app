@@ -8,7 +8,7 @@ export interface ITweet {
   author: PublicKey;
   timestamp: BN;
   content: string;
-  topic?: string;
+  topic: string;
   key: string;
   authorKey: string;
   createdAt: string;

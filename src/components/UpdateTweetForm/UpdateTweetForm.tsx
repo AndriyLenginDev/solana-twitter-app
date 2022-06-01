@@ -1,50 +1,42 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import TextArea from '@/components/general/TextArea/TextArea';
 import IconInput from '@/components/IconInput/IconInput';
 import HashIcon from '@/components/icons/HashIcon';
 import Button from '@/components/general/Button/Button';
 import DataItem from '@/components/general/DataItem/DataItem';
-import classes from './TweetForm.module.scss';
+import classes from './UpdateTweetForm.module.scss';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useCharsLimit } from '@/hooks/useCharsLimit';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { CONTENT_MAX_CHARS, TOPIC_MAX_CHARS } from '@/web3/constants';
-import { sendTweet } from '@/web3';
+import { updateTweet } from '@/web3';
+import { ITweet } from '@/models/tweet';
 
-export interface TweetFormProps {
-  className?: string;
-  forcedTopic?: string;
+interface UpdateTweetModalProps  {
+  tweet: ITweet;
+  onFinish: () => any;
 }
 
-const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
+const UpdateTweetForm: FC<UpdateTweetModalProps> = ({ tweet, onFinish }) => {
   const { connected } = useWallet();
   const dispatch = useAppDispatch();
-  const [content, setContent] = useState<string>('');
-  const [topic, setTopic] = useState<string>(forcedTopic || '');
+  const [tweetData, setTweetData] = useState<ITweet>(tweet || {});
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setTopic(forcedTopic || '');
-  }, [forcedTopic]);
-
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
+    setTweetData({ ...tweetData, content: e.target.value });
   };
 
   const handleTopicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTopic(e.target.value);
+    setTweetData({ ...tweetData, topic: e.target.value });
   };
 
-  const { charsLeft, charsLeftClass } = useCharsLimit(content, CONTENT_MAX_CHARS);
-
-  const topicDisabled = useMemo<boolean>(() => {
-    return !!forcedTopic;
-  }, [forcedTopic]);
+  const { charsLeft, charsLeftClass } = useCharsLimit(tweetData.content, CONTENT_MAX_CHARS);
 
   const sendDisabled = useMemo<boolean>(() => {
-    return !content.length || charsLeft < 0;
-  }, [content, charsLeft]);
+    return !tweetData.content.length || charsLeft < 0;
+  }, [tweetData.content, charsLeft]);
 
   const send = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -53,10 +45,9 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
 
     try {
       setLoading(true);
-      const tweet = await sendTweet(content, topic);
-      dispatch(tweetsActions.addTweet(tweet));
-      setContent('');
-      setTopic(forcedTopic || '');
+      const updatedTweet = await updateTweet(tweet, tweetData.topic, tweetData.content);
+      dispatch(tweetsActions.updateTweet(updatedTweet));
+      onFinish();
     } catch (error) {
       // TODO: show error
     } finally {
@@ -69,11 +60,11 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
   }
 
   return (
-    <form className={[classes.form__wrapper, className].join(' ')}>
+    <form className={classes.form__wrapper}>
       <TextArea
         autoresize
         placeholder="What's happening?"
-        value={content}
+        value={tweetData.content}
         onChange={handleTextChange}
       />
       <div className={classes.form__footer}>
@@ -81,8 +72,7 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
           className={classes.topic}
           Icon={HashIcon}
           maxLength={TOPIC_MAX_CHARS}
-          disabled={topicDisabled}
-          value={topic}
+          value={tweetData.topic}
           onChange={handleTopicChange}
         />
         <div className={classes.button}>
@@ -91,7 +81,7 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
             disabled={sendDisabled}
             loading={loading}
             onClick={send}>
-            Tweet
+            Update
           </Button>
         </div>
       </div>
@@ -99,4 +89,4 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
   );
 };
 
-export default TweetForm;
+export default UpdateTweetForm;
