@@ -18,6 +18,8 @@ export const getAppProgram = (): AppProgram => appProgram as AppProgram;
 
 export const useAppProgram = (): AppProgram => {
   const preflightCommitment = 'processed';
+  // For important transactions use "confirmed" and "finalized" commitment levels.
+  // Use the "finalized" commitment level for financial transactions with critical consequences.
   const commitment = 'processed';
   const wallet = useAnchorWallet() as AnchorWallet;
   const { endpoint } = useAppCluster();
