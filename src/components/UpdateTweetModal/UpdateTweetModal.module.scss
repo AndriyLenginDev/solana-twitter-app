@@ -1,0 +1,22 @@
+.form {
+  &__wrapper {
+    @apply flex flex-col p-8 pt-5;
+  }
+
+
+  &__footer {
+    @apply flex md:flex-row flex-wrap items-center justify-end md:justify-between mt-3;
+
+    .topic {
+      @apply w-full md:w-56;
+    }
+
+    .button {
+      @apply flex items-center justify-end mt-3 md:mt-0;
+    }
+
+    .counter {
+      @apply mr-6;
+    }
+  }
+}

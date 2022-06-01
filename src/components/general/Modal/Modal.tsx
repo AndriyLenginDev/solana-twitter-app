@@ -14,7 +14,7 @@ const Modal: FC<ModalProps> = ({ isOpen, close, children }) =>
     ? createPortal(
         <div
           className={classes.modal__backdrop}
-          onClick={close}>
+          onClick={() => close()}>
           <div
             className={classes.modal__content}
             onClick={stopPropagation}>
