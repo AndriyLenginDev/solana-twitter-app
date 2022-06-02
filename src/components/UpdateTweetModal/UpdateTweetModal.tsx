@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
+import classes from './UpdateTweetModal.module.scss';
 import Modal, { ModalProps } from '@/components/general/Modal/Modal';
 import CloseIcon from '@/components/icons/CloseIcon';
-import classes from './UpdateTweetModal.module.scss';
 import UpdateTweetForm from '@/components/UpdateTweetForm/UpdateTweetForm';
 import { ITweet } from '@/models/tweet';
 
@@ -10,12 +10,6 @@ interface UpdateTweetModalProps extends ModalProps {
 }
 
 const UpdateTweetModal: FC<UpdateTweetModalProps> = ({ isOpen, close, tweet }) => {
-
-  const cancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    close();
-  };
-
   return (
     <Modal
       isOpen={isOpen}
@@ -25,7 +19,7 @@ const UpdateTweetModal: FC<UpdateTweetModalProps> = ({ isOpen, close, tweet }) =
           <h1>Update tweet</h1>
           <button
             className={classes.cancel}
-            onClick={cancel}>
+            onClick={() => close()}>
             <CloseIcon />
           </button>
         </div>

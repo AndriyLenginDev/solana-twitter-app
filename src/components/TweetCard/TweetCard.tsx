@@ -1,11 +1,12 @@
-import React, {FC, useCallback, useMemo} from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
+import classes from './TweetCard.module.scss';
 import { NavLink } from 'react-router-dom';
 import TweetControls from '@/components/TweetControls/TweetControls';
-import classes from './TweetCard.module.scss';
+import TweetFooter from '@/components/TweetFooter/TweetFooter';
+import { useWallet } from '@solana/wallet-adapter-react';
 import { ITweet } from '@/models/tweet';
 import { PublicKey } from '@solana/web3.js';
 import { RoutePaths } from '@/router';
-import { useWallet } from '@solana/wallet-adapter-react';
 
 export interface TweetCardProps {
   tweet: ITweet;
@@ -24,10 +25,6 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
     [publicKey]
   );
 
-  const topicLink = (topic: string): string => {
-    return `${RoutePaths.TOPICS}/${topic}`;
-  };
-
   const isSelfTweet = useMemo<boolean>(() => {
     return publicKey?.toBase58() === tweet.author.toBase58();
   }, [publicKey, tweet.author]);
@@ -45,14 +42,8 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
       </div>
       <div className={classes.tweet__body}>
         <p className={classes.content}>{tweet.content}</p>
-        {tweet.topic && (
-          <NavLink
-            className={classes.topic}
-            to={topicLink(tweet.topic)}>
-            #{tweet.topic}
-          </NavLink>
-        )}
       </div>
+      <TweetFooter tweet={tweet} />
     </div>
   );
 };
