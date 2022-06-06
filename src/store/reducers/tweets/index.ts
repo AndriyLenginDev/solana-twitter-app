@@ -4,17 +4,22 @@ import {
   IAddTweetAction,
   IDeleteTweetAction,
   IGetTweetsAction,
+  IGetTweetsNextPageAction,
   ISetTweetsAction
 } from '@/store/reducers/tweets/types';
 
 export interface ITweetsState {
   tweets: ITweet[];
   loading: boolean;
+  page: number;
+  limit: number;
 }
 
 export const initialState: ITweetsState = {
   tweets: [],
-  loading: false
+  loading: false,
+  page: 1,
+  limit: 10
 };
 
 export const tweetsSliceName = 'tweets';
@@ -33,6 +38,10 @@ const tweetsSlice = createSlice({
       state.loading = action.payload;
       return state;
     },
+    setPage(state, action: PayloadAction<number>) {
+      state.page = action.payload;
+      return state;
+    },
     getTweets(state, action: IGetTweetsAction) {
       return state;
     },
@@ -48,6 +57,9 @@ const tweetsSlice = createSlice({
       if (index !== -1) {
         state.tweets[index] = action.payload;
       }
+      return state;
+    },
+    getTweetsNextPage(state, action: IGetTweetsNextPageAction) {
       return state;
     }
   }

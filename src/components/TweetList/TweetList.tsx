@@ -5,18 +5,22 @@ import TweetCard from '@/components/TweetCard/TweetCard';
 import classes from './TweetList.module.scss';
 import { useObserver } from '@/hooks/useObserver';
 
-
 export interface TweetListProps {
   tweets: ITweet[];
   loading: boolean;
+  onNewPage?: () => unknown;
 }
 
-const TweetList: FC<TweetListProps> = ({ tweets, loading }) => {
+const TweetList: FC<TweetListProps> = ({ tweets, loading, onNewPage = () => {} }) => {
   const lastElement = useRef<HTMLDivElement>(null);
 
-  useObserver(lastElement, () => {
-    console.log('callback');
-  }, loading);
+  useObserver(
+    lastElement,
+    () => {
+      onNewPage();
+    },
+    loading
+  );
   return (
     <div className={classes.tweet__list}>
       {tweets.map((tweet) => (

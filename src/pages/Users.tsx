@@ -4,15 +4,17 @@ import TweetList from '@/components/TweetList/TweetList';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { selectSortedTweets } from '@/store/reducers/tweets/selectors';
+import { selectLoading, selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useParams } from 'react-router-dom';
 import { authorFilter } from '@/web3/filters';
 
 const Users: FC = () => {
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.tweets.loading);
+  const loading = useAppSelector(selectLoading);
   const tweets = useAppSelector(selectSortedTweets);
   const { publicKey } = useParams();
+
+  // TODO: add onNewPage handler
 
   useEffect(() => {
     if (publicKey) {
