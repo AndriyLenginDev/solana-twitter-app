@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, memo, useCallback, useMemo } from 'react';
 import classes from './TweetCard.module.scss';
 import { NavLink } from 'react-router-dom';
 import TweetControls from '@/components/TweetControls/TweetControls';
@@ -48,4 +48,4 @@ const TweetCard: FC<TweetCardProps> = ({ tweet }) => {
   );
 };
 
-export default TweetCard;
+export default memo(TweetCard);
