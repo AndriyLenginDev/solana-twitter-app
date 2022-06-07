@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/solana-twitter-app/static/css/main.3eac66bb.css",
-    "main.js": "/solana-twitter-app/static/js/main.8b132490.js",
+    "main.js": "/solana-twitter-app/static/js/main.e39c3e30.js",
     "static/css/880.1877ff5a.chunk.css": "/solana-twitter-app/static/css/880.1877ff5a.chunk.css",
-    "static/js/880.d1f49420.chunk.js": "/solana-twitter-app/static/js/880.d1f49420.chunk.js",
+    "static/js/880.d574fab0.chunk.js": "/solana-twitter-app/static/js/880.d574fab0.chunk.js",
     "static/css/489.5be45723.chunk.css": "/solana-twitter-app/static/css/489.5be45723.chunk.css",
-    "static/js/489.678ee6dd.chunk.js": "/solana-twitter-app/static/js/489.678ee6dd.chunk.js",
+    "static/js/489.ed0b3ff8.chunk.js": "/solana-twitter-app/static/js/489.ed0b3ff8.chunk.js",
     "static/css/349.d43e1be1.chunk.css": "/solana-twitter-app/static/css/349.d43e1be1.chunk.css",
-    "static/js/349.6ae56df7.chunk.js": "/solana-twitter-app/static/js/349.6ae56df7.chunk.js",
+    "static/js/349.48491726.chunk.js": "/solana-twitter-app/static/js/349.48491726.chunk.js",
     "static/css/13.c513c27e.chunk.css": "/solana-twitter-app/static/css/13.c513c27e.chunk.css",
-    "static/js/13.0b7076d3.chunk.js": "/solana-twitter-app/static/js/13.0b7076d3.chunk.js",
+    "static/js/13.4a9e6cf5.chunk.js": "/solana-twitter-app/static/js/13.4a9e6cf5.chunk.js",
     "static/js/578.f7257c25.chunk.js": "/solana-twitter-app/static/js/578.f7257c25.chunk.js",
     "static/js/828.3978e15b.chunk.js": "/solana-twitter-app/static/js/828.3978e15b.chunk.js",
     "static/js/299.a6ec46b2.chunk.js": "/solana-twitter-app/static/js/299.a6ec46b2.chunk.js",
@@ -17,28 +17,28 @@
     "static/js/507.455350f2.chunk.js": "/solana-twitter-app/static/js/507.455350f2.chunk.js",
     "static/js/438.e3e4bbff.chunk.js": "/solana-twitter-app/static/js/438.e3e4bbff.chunk.js",
     "static/js/114.a66f83c9.chunk.js": "/solana-twitter-app/static/js/114.a66f83c9.chunk.js",
-    "static/js/888.449603db.chunk.js": "/solana-twitter-app/static/js/888.449603db.chunk.js",
+    "static/js/232.3cdc1b8c.chunk.js": "/solana-twitter-app/static/js/232.3cdc1b8c.chunk.js",
     "index.html": "/solana-twitter-app/index.html",
     "main.3eac66bb.css.map": "/solana-twitter-app/static/css/main.3eac66bb.css.map",
-    "main.8b132490.js.map": "/solana-twitter-app/static/js/main.8b132490.js.map",
+    "main.e39c3e30.js.map": "/solana-twitter-app/static/js/main.e39c3e30.js.map",
     "880.1877ff5a.chunk.css.map": "/solana-twitter-app/static/css/880.1877ff5a.chunk.css.map",
-    "880.d1f49420.chunk.js.map": "/solana-twitter-app/static/js/880.d1f49420.chunk.js.map",
+    "880.d574fab0.chunk.js.map": "/solana-twitter-app/static/js/880.d574fab0.chunk.js.map",
     "489.5be45723.chunk.css.map": "/solana-twitter-app/static/css/489.5be45723.chunk.css.map",
-    "489.678ee6dd.chunk.js.map": "/solana-twitter-app/static/js/489.678ee6dd.chunk.js.map",
+    "489.ed0b3ff8.chunk.js.map": "/solana-twitter-app/static/js/489.ed0b3ff8.chunk.js.map",
     "349.d43e1be1.chunk.css.map": "/solana-twitter-app/static/css/349.d43e1be1.chunk.css.map",
-    "349.6ae56df7.chunk.js.map": "/solana-twitter-app/static/js/349.6ae56df7.chunk.js.map",
+    "349.48491726.chunk.js.map": "/solana-twitter-app/static/js/349.48491726.chunk.js.map",
     "13.c513c27e.chunk.css.map": "/solana-twitter-app/static/css/13.c513c27e.chunk.css.map",
-    "13.0b7076d3.chunk.js.map": "/solana-twitter-app/static/js/13.0b7076d3.chunk.js.map",
+    "13.4a9e6cf5.chunk.js.map": "/solana-twitter-app/static/js/13.4a9e6cf5.chunk.js.map",
     "578.f7257c25.chunk.js.map": "/solana-twitter-app/static/js/578.f7257c25.chunk.js.map",
     "828.3978e15b.chunk.js.map": "/solana-twitter-app/static/js/828.3978e15b.chunk.js.map",
     "299.a6ec46b2.chunk.js.map": "/solana-twitter-app/static/js/299.a6ec46b2.chunk.js.map",
     "882.c3cc30fc.chunk.js.map": "/solana-twitter-app/static/js/882.c3cc30fc.chunk.js.map",
     "438.e3e4bbff.chunk.js.map": "/solana-twitter-app/static/js/438.e3e4bbff.chunk.js.map",
     "114.a66f83c9.chunk.js.map": "/solana-twitter-app/static/js/114.a66f83c9.chunk.js.map",
-    "888.449603db.chunk.js.map": "/solana-twitter-app/static/js/888.449603db.chunk.js.map"
+    "232.3cdc1b8c.chunk.js.map": "/solana-twitter-app/static/js/232.3cdc1b8c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3eac66bb.css",
-    "static/js/main.8b132490.js"
+    "static/js/main.e39c3e30.js"
   ]
 }
