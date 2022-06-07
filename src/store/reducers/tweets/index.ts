@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITweet } from '@/models/tweet';
 import {
   IAddTweetAction,
+  IAddTweetsAction,
   IDeleteTweetAction,
   IGetTweetsAction,
   IGetTweetsNextPageAction,
@@ -13,13 +14,15 @@ export interface ITweetsState {
   loading: boolean;
   page: number;
   limit: number;
+  total: number;
 }
 
 export const initialState: ITweetsState = {
   tweets: [],
   loading: false,
   page: 1,
-  limit: 10
+  limit: 10,
+  total: 0
 };
 
 export const tweetsSliceName = 'tweets';
@@ -34,12 +37,20 @@ const tweetsSlice = createSlice({
       state.tweets = action.payload;
       return state;
     },
+    addTweets(state, action: IAddTweetsAction) {
+      state.tweets.push(...action.payload);
+      return state;
+    },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
       return state;
     },
     setPage(state, action: PayloadAction<number>) {
       state.page = action.payload;
+      return state;
+    },
+    setTotal(state, action: PayloadAction<number>) {
+      state.total = action.payload;
       return state;
     },
     getTweets(state, action: IGetTweetsAction) {
