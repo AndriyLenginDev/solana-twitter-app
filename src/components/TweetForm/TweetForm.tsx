@@ -59,7 +59,7 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
       setContent('');
       setTopic(forcedTopic || '');
     } catch (error) {
-      // TODO: show error
+      console.error(error);
     } finally {
       setLoading(false);
     }

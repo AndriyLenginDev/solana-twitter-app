@@ -57,6 +57,7 @@ const tweetsSlice = createSlice({
       return state;
     },
     addTweet(state, action: IAddTweetAction) {
+      // TODO: use saga to add tweet or reload current list
       state.tweets.push(action.payload);
       return state;
     },

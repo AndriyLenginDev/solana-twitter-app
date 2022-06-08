@@ -49,7 +49,7 @@ const UpdateTweetForm: FC<UpdateTweetModalProps> = ({ tweet, onFinish }) => {
       dispatch(tweetsActions.updateTweet(updatedTweet));
       onFinish();
     } catch (error) {
-      // TODO: show error
+      console.error(error);
     } finally {
       setLoading(false);
     }
