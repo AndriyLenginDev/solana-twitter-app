@@ -52,6 +52,7 @@ const TweetForm: FC<TweetFormProps> = ({ className, forcedTopic }) => {
     if (loading) return;
 
     try {
+      // TODO: handle pagination logic
       setLoading(true);
       const tweet = await sendTweet(content, topic);
       dispatch(tweetsActions.addTweet(tweet));

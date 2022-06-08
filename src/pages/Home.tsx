@@ -1,26 +1,15 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, { FC } from 'react';
 import TweetForm from '@/components/TweetForm/TweetForm';
 import TweetList from '@/components/TweetList/TweetList';
 import { useAppSelector } from '@/hooks/useAppSelector';
-import { useAppDispatch } from '@/hooks/useAppDispatch';
-import { tweetsActions } from '@/store/reducers/tweets';
 import { selectLoading, selectSortedTweets } from '@/store/reducers/tweets/selectors';
+import { usePaginatedTweets } from '@/hooks/usePaginatedTweets';
 
 const Home: FC = () => {
   const loading = useAppSelector(selectLoading);
   const tweets = useAppSelector(selectSortedTweets);
-  const dispatch = useAppDispatch();
+  const { onNewPage } = usePaginatedTweets();
 
-  const onNewPage = useCallback(() => {
-    dispatch(tweetsActions.getTweetsNextPage())
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(tweetsActions.getTweets());
-    return () => {
-      dispatch(tweetsActions.setTweets([]));
-    };
-  }, [dispatch]);
   return (
     <>
       <TweetForm />
