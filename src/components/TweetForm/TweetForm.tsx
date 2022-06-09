@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useCharsLimit } from '@/hooks/useCharsLimit';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { CONTENT_MAX_CHARS, TOPIC_MAX_CHARS } from '@/web3/constants';
-import { sendTweet } from '@/web3';
+import { sendTweet } from '@/web3/tweets';
 
 export interface TweetFormProps {
   className?: string;

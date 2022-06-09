@@ -13,6 +13,7 @@ export interface ITweet {
   authorKey: string;
   createdAt: string;
   createdAgo: string;
+  likes?: number;
 }
 
 export class Tweet implements ITweet {
@@ -20,6 +21,7 @@ export class Tweet implements ITweet {
   public timestamp: BN;
   public content: string;
   public topic: string;
+  public likes: number = 0;
 
   constructor(public publicKey: PublicKey, accountData: any) {
     this.author = accountData.author;

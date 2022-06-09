@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/hooks/useAppDispatch';
 import { useCharsLimit } from '@/hooks/useCharsLimit';
 import { tweetsActions } from '@/store/reducers/tweets';
 import { CONTENT_MAX_CHARS, TOPIC_MAX_CHARS } from '@/web3/constants';
-import { updateTweet } from '@/web3';
+import { updateTweet } from '@/web3/tweets';
 import { ITweet } from '@/models/tweet';
 
 interface UpdateTweetModalProps  {

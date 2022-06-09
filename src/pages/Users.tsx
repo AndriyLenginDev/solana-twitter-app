@@ -4,7 +4,7 @@ import TweetList from '@/components/TweetList/TweetList';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectLoading, selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useParams } from 'react-router-dom';
-import { authorFilter } from '@/web3/filters';
+import { authorFilter } from '@/web3/tweets/filters';
 import { usePaginatedTweets } from '@/hooks/usePaginatedTweets';
 
 const Users: FC = () => {

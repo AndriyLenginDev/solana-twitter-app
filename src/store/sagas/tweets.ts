@@ -1,12 +1,13 @@
-import { all, put, spawn, takeLeading, call, select } from 'typed-redux-saga';
+import { all, put, spawn, takeLeading, call, select, fork, takeLatest } from 'typed-redux-saga';
 import { tweetsActions } from '@/store/reducers/tweets';
 import {
   IAddTweetAction,
   IDeleteTweetAction,
   IGetTweetsAction,
-  IGetTweetsNextPageAction
+  IGetTweetsNextPageAction,
+  ISetTweetsAction
 } from '@/store/reducers/tweets/types';
-import { deleteTweet } from '@/web3';
+import { deleteTweet } from '@/web3/tweets';
 import { ITweet } from '@/models/tweet';
 import {
   hasNextPage,
@@ -16,7 +17,7 @@ import {
   selectSortedTweets,
   selectTweets
 } from '@/store/reducers/tweets/selectors';
-import { getTweetsPage, prefetchTweets } from '@/web3/pagination';
+import { getTweetsPage, prefetchTweets } from '@/web3/tweets/pagination';
 import { MemcmpFilter, PublicKey } from '@solana/web3.js';
 
 export function* handleGetTweets(action: IGetTweetsAction): Generator {
@@ -98,6 +99,15 @@ export function* handleGetTweetsNextPage(action: IGetTweetsNextPageAction): Gene
   }
 }
 
+export function* handleNewTweets(action: ISetTweetsAction): Generator {
+  // Prefetch likes
+  if (action.payload?.length) {
+    // likes = await prefetchLikes([tweetFilter(this.key)]);
+    // yield all(action.payload.map((tweet) => fork([tweet, tweet.prefetchLikes])));
+  }
+  yield 1;
+}
+
 export function* watchGetTweets(): Generator {
   yield takeLeading(tweetsActions.getTweets, handleGetTweets);
 }
@@ -114,6 +124,14 @@ export function* watchGetTweetsNextPage(): Generator {
   yield takeLeading(tweetsActions.getTweetsNextPage, handleGetTweetsNextPage);
 }
 
+export function* watchNewTweets(): Generator {
+  yield takeLatest([tweetsActions.addTweets, tweetsActions.setTweets], handleNewTweets);
+}
+
 export function* tweetsSaga(): Generator {
-  yield all([watchGetTweets, watchAddTweet, watchDeleteTweet, watchGetTweetsNextPage].map(spawn));
+  yield all(
+    [watchGetTweets, watchAddTweet, watchDeleteTweet, watchGetTweetsNextPage, watchNewTweets].map(
+      spawn
+    )
+  );
 }

@@ -6,7 +6,7 @@ import TweetList from '@/components/TweetList/TweetList';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { selectLoading, selectSortedTweets } from '@/store/reducers/tweets/selectors';
 import { useWallet } from '@solana/wallet-adapter-react';
-import { authorFilter } from '@/web3/filters';
+import { authorFilter } from '@/web3/tweets/filters';
 import { usePaginatedTweets } from '@/hooks/usePaginatedTweets';
 
 const Profile: FC = () => {
