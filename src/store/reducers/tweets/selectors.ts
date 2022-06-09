@@ -1,10 +1,13 @@
 import { RootState } from '@/store';
 import { ITweet } from '@/models/tweet';
 import { createSelector } from '@reduxjs/toolkit';
+import { MemcmpFilter } from '@solana/web3.js';
 
 export const selectTweets = (state: RootState): ITweet[] => state.tweets.tweets;
 
 export const selectLoading = (state: RootState): boolean => state.tweets.loading;
+
+export const selectFilter = (state: RootState): MemcmpFilter[] => state.tweets.filter;
 
 export const selectPage = (state: RootState): number => state.tweets.page;
 

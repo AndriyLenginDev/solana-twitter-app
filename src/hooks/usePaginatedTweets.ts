@@ -41,7 +41,7 @@ export const usePaginatedTweets = (
       dispatch(tweetsActions.getTweets(cachedFilter));
     }
     return () => {
-      dispatch(tweetsActions.setTweets([]));
+      dispatch(tweetsActions.resetTweets());
     };
   }, [paramRequired, dispatch, cachedFilter, param]);
 
