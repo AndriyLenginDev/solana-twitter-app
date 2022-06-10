@@ -1,7 +1,13 @@
 import { RootState } from '@/store';
 import { ITweet } from '@/models/tweet';
 import { createSelector } from '@reduxjs/toolkit';
-import { MemcmpFilter } from '@solana/web3.js';
+import { MemcmpFilter, PublicKey } from '@solana/web3.js';
+
+export const selectTweet =
+  (publicKey: PublicKey) =>
+  (state: RootState): ITweet | undefined => {
+    return state.tweets.tweets.find((tweet) => tweet.key === publicKey.toBase58());
+  };
 
 export const selectTweets = (state: RootState): ITweet[] => state.tweets.tweets;
 

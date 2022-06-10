@@ -8,13 +8,13 @@ import {
   ISetTweetsAction
 } from '@/store/reducers/tweets/types';
 import { deleteTweet } from '@/web3/tweets';
-import { ITweet } from '@/models/tweet';
+import {ITweet, Tweet} from '@/models/tweet';
 import {
   hasNextPage,
   selectFilter,
   selectLimit,
   selectPage,
-  selectSortedTweets,
+  selectSortedTweets, selectTweet,
   selectTweets
 } from '@/store/reducers/tweets/selectors';
 import { getTweetsPage, prefetchTweets } from '@/web3/tweets/pagination';
@@ -23,31 +23,48 @@ import { getLikes, prefetchLikes } from '@/web3/likes';
 import { authorFilter, tweetFilter } from '@/web3/likes/filters';
 import { shallowClone } from '@/utils/helpers';
 import { ILike } from '@/models/like';
-import { getAppProgram } from '@/hooks/useAppProgram';
+import { selectWallet } from '@/store/reducers/wallet/selectors';
 
-export function* prefetchTweetLikes(tweet: ITweet): Generator {
+export function* prefetchTweetLikesCount(tweet: ITweet): Generator {
   try {
-    const { wallet } = getAppProgram();
-    const calls: any[] = [call(prefetchLikes, [tweetFilter(tweet.key)])];
-    if (wallet?.publicKey) {
-      calls.push(
-        call(getLikes, [tweetFilter(tweet.key), authorFilter(wallet?.publicKey.toBase58())])
-      );
-    }
-    const [likes, personalLikes] = (yield all(calls)) as [number, ILike[]];
-    if (likes) {
-      yield put(
-        tweetsActions.updateTweet(
-          shallowClone<ITweet>(tweet, {
-            likes,
-            isLiked: !!personalLikes?.length
-          })
-        )
-      );
+    const likes = (yield call(prefetchLikes, [tweetFilter(tweet.key)])) as number;
+    if (likes !== tweet.likes) {
+      const current = (yield select(selectTweet(tweet.publicKey))) as Tweet;
+      const copy = shallowClone<ITweet>(current, { likes });
+      yield put(tweetsActions.updateTweet(copy));
     }
   } catch (error) {
     console.error(error);
   }
+}
+
+export function* prefetchTweetLikedStatus(tweet: ITweet): Generator {
+  try {
+    const publicKey = (yield select(selectWallet)) as PublicKey;
+    if (publicKey) {
+      const personalLikes = (yield call(getLikes, [
+        tweetFilter(tweet.key),
+        authorFilter(publicKey.toBase58())
+      ])) as ILike[];
+      if (personalLikes?.length) {
+        const current = (yield select(selectTweet(tweet.publicKey))) as Tweet;
+        const copy = shallowClone<ITweet>(current, { isLiked: true });
+        yield put(tweetsActions.updateTweet(copy));
+      }
+    } else {
+      // TODO: reset isLiked
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function* prefetchTweetLikes(tweet: ITweet): Generator {
+  yield all([
+    //
+    call(prefetchTweetLikesCount, tweet),
+    call(prefetchTweetLikedStatus, tweet)
+  ]);
 }
 
 export function* handleGetTweets(action: IGetTweetsAction): Generator {
