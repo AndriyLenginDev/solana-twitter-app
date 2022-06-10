@@ -9,3 +9,10 @@ export const tweetFilter = (tweetBase58PublicKey: string): MemcmpFilter => ({
     bytes: tweetBase58PublicKey
   }
 });
+
+export const authorFilter = (authorBase58PublicKey: string): MemcmpFilter => ({
+  memcmp: {
+    offset: 8, // Discriminator.
+    bytes: authorBase58PublicKey
+  }
+});

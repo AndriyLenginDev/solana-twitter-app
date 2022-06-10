@@ -8,4 +8,5 @@ export type IAddTweetsAction = PayloadAction<ITweet[]>;
 export type IGetTweetsAction = PayloadAction<MemcmpFilter[] | undefined>;
 export type IAddTweetAction = PayloadAction<ITweet>;
 export type IDeleteTweetAction = PayloadAction<ITweet>;
+export type IUpdateTweetAction = PayloadAction<ITweet>;
 export type IGetTweetsNextPageAction = PayloadAction<any[] | undefined>;

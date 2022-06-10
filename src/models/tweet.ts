@@ -14,6 +14,7 @@ export interface ITweet {
   createdAt: string;
   createdAgo: string;
   likes?: number;
+  isLiked?: boolean;
 }
 
 export class Tweet implements ITweet {
@@ -22,6 +23,7 @@ export class Tweet implements ITweet {
   public content: string;
   public topic: string;
   public likes: number = 0;
+  public isLiked: boolean = false;
 
   constructor(public publicKey: PublicKey, accountData: any) {
     this.author = accountData.author;

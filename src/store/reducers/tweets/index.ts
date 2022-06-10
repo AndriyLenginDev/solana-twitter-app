@@ -7,7 +7,8 @@ import {
   IGetTweetsAction,
   IGetTweetsNextPageAction,
   ISetFilterAction,
-  ISetTweetsAction
+  ISetTweetsAction,
+  IUpdateTweetAction
 } from '@/store/reducers/tweets/types';
 import { MemcmpFilter } from '@solana/web3.js';
 
@@ -75,7 +76,7 @@ const tweetsSlice = createSlice({
     deleteTweet(state, action: IDeleteTweetAction) {
       return state;
     },
-    updateTweet(state, action: IDeleteTweetAction) {
+    updateTweet(state, action: IUpdateTweetAction) {
       const index = state.tweets.findIndex((t) => t.key === action.payload.key);
       if (index !== -1) {
         state.tweets[index] = action.payload;

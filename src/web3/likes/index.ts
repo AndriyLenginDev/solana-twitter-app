@@ -55,7 +55,5 @@ export const prefetchLikes = async (filters: any[] = []): Promise<number> => {
     dataSlice: { offset: 0, length: 0 }
   });
 
-  console.log(allLikes);
-
   return allLikes?.length;
 };

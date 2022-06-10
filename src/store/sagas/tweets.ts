@@ -19,6 +19,36 @@ import {
 } from '@/store/reducers/tweets/selectors';
 import { getTweetsPage, prefetchTweets } from '@/web3/tweets/pagination';
 import { MemcmpFilter, PublicKey } from '@solana/web3.js';
+import { getLikes, prefetchLikes } from '@/web3/likes';
+import { authorFilter, tweetFilter } from '@/web3/likes/filters';
+import { shallowClone } from '@/utils/helpers';
+import { ILike } from '@/models/like';
+import { getAppProgram } from '@/hooks/useAppProgram';
+
+export function* prefetchTweetLikes(tweet: ITweet): Generator {
+  try {
+    const { wallet } = getAppProgram();
+    const calls: any[] = [call(prefetchLikes, [tweetFilter(tweet.key)])];
+    if (wallet?.publicKey) {
+      calls.push(
+        call(getLikes, [tweetFilter(tweet.key), authorFilter(wallet?.publicKey.toBase58())])
+      );
+    }
+    const [likes, personalLikes] = (yield all(calls)) as [number, ILike[]];
+    if (likes) {
+      yield put(
+        tweetsActions.updateTweet(
+          shallowClone<ITweet>(tweet, {
+            likes,
+            isLiked: !!personalLikes?.length
+          })
+        )
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 export function* handleGetTweets(action: IGetTweetsAction): Generator {
   try {
@@ -100,12 +130,9 @@ export function* handleGetTweetsNextPage(action: IGetTweetsNextPageAction): Gene
 }
 
 export function* handleNewTweets(action: ISetTweetsAction): Generator {
-  // Prefetch likes
   if (action.payload?.length) {
-    // likes = await prefetchLikes([tweetFilter(this.key)]);
-    // yield all(action.payload.map((tweet) => fork([tweet, tweet.prefetchLikes])));
+    yield all(action.payload.map((tweet) => fork(prefetchTweetLikes, tweet)));
   }
-  yield 1;
 }
 
 export function* watchGetTweets(): Generator {

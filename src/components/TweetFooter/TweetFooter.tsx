@@ -15,7 +15,6 @@ interface TweetFooterProps {
 
 const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
   const { connected, publicKey } = useWallet();
-  const [like, setLike] = useState<ILike | null>(null);
 
   const topicLink = (topic: string): string => {
     return `${RoutePaths.TOPICS}/${topic}`;
@@ -25,21 +24,11 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
     return !!tweet.likes;
   }, [tweet.likes]);
 
-  const isLiked = false;
-
-  // const isLiked = useMemo<boolean>(() => {
-  //   if (publicKey) {
-  //     return !!likes.find((l) => l.author.toBase58() === publicKey.toBase58());
-  //   }
-  //   return false;
-  // }, [likes, publicKey]);
-
   const handleAddLike = async () => {
     if (publicKey) {
       try {
         // const like = await addLike(tweet.publicKey);
-        // setLike(like);
-        tweet.incrementLikes();
+        // tweet.incrementLikes();
       } catch (error) {
         console.error(error);
       }
@@ -47,11 +36,10 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
   };
 
   const handleRemoveLike = async () => {
-    if (publicKey && like) {
+    if (publicKey && tweet.isLiked) {
       try {
-        await deleteLike(like);
-        setLike(null);
-        tweet.decrementLikes();
+        // await deleteLike(like);
+        // tweet.decrementLikes();
       } catch (error) {
         console.error(error);
       }
@@ -61,6 +49,7 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
   useEffect(() => {
     // TODO: get likes counter and personal like
     // tweet.prefetchLikes().catch(console.error);
+    // console.log('Check personal likes', tweet.content);
   }, [tweet]);
 
   return (
@@ -74,7 +63,7 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
       )}
       <div className={classes.footer__likes}>
         {hasLikes && <span>{tweet.likes}</span>}
-        {isLiked ? (
+        {tweet.isLiked ? (
           <button
             className={classes.active}
             onClick={handleRemoveLike}>
