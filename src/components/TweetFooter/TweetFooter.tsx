@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import classes from './TweetFooter.module.scss';
 import { NavLink } from 'react-router-dom';
 import HeartIcon from '@/components/icons/HeartIcon';
@@ -45,12 +45,6 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
       }
     }
   };
-
-  useEffect(() => {
-    // TODO: get likes counter and personal like
-    // tweet.prefetchLikes().catch(console.error);
-    // console.log('Check personal likes', tweet.content);
-  }, [tweet]);
 
   return (
     <div className={classes.footer}>

@@ -51,8 +51,9 @@ export function* prefetchTweetLikedStatus(tweet: ITweet): Generator {
         const copy = shallowClone<ITweet>(current, { isLiked: true });
         yield put(tweetsActions.updateTweet(copy));
       }
-    } else {
-      // TODO: reset isLiked
+    } else if (tweet.isLiked) {
+      const copy = shallowClone<ITweet>(tweet, { isLiked: false });
+      yield put(tweetsActions.updateTweet(copy));
     }
   } catch (error) {
     console.error(error);
