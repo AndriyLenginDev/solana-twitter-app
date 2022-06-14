@@ -27,13 +27,13 @@ export const addLike = async (tweetPubkey: PublicKey): Promise<ILike> => {
   return new Like(like.publicKey, likeAccount);
 };
 
-export const deleteLike = async (like: ILike) => {
+export const deleteLike = async (likePubKey: PublicKey) => {
   const { wallet, program } = getAppProgram();
 
   await program.rpc.deleteLike({
     accounts: {
       author: wallet.publicKey,
-      tweet: like.publicKey
+      like: likePubKey
     }
   });
 };

@@ -10,3 +10,5 @@ export type IAddTweetAction = PayloadAction<ITweet>;
 export type IDeleteTweetAction = PayloadAction<ITweet>;
 export type IUpdateTweetAction = PayloadAction<ITweet>;
 export type IGetTweetsNextPageAction = PayloadAction<any[] | undefined>;
+export type IAddLikeAction = PayloadAction<ITweet>;
+export type IRemoveLikeAction = PayloadAction<ITweet>;

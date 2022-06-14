@@ -1,6 +1,7 @@
 import { all, put, spawn, takeLeading, call, select, fork, takeLatest } from 'typed-redux-saga';
 import { tweetsActions } from '@/store/reducers/tweets';
 import {
+  IAddLikeAction,
   IAddTweetAction,
   IDeleteTweetAction,
   IGetTweetsAction,
@@ -8,21 +9,22 @@ import {
   ISetTweetsAction
 } from '@/store/reducers/tweets/types';
 import { deleteTweet } from '@/web3/tweets';
-import {ITweet, Tweet} from '@/models/tweet';
+import { ITweet, Tweet } from '@/models/tweet';
+import { ILike } from '@/models/like';
 import {
   hasNextPage,
   selectFilter,
   selectLimit,
   selectPage,
-  selectSortedTweets, selectTweet,
+  selectSortedTweets,
+  selectTweet,
   selectTweets
 } from '@/store/reducers/tweets/selectors';
 import { getTweetsPage, prefetchTweets } from '@/web3/tweets/pagination';
 import { MemcmpFilter, PublicKey } from '@solana/web3.js';
-import { getLikes, prefetchLikes } from '@/web3/likes';
+import {addLike, deleteLike, getLikes, prefetchLikes} from '@/web3/likes';
 import { authorFilter, tweetFilter } from '@/web3/likes/filters';
 import { shallowClone } from '@/utils/helpers';
-import { ILike } from '@/models/like';
 import { selectWallet } from '@/store/reducers/wallet/selectors';
 
 export function* prefetchTweetLikesCount(tweet: ITweet): Generator {
@@ -38,21 +40,21 @@ export function* prefetchTweetLikesCount(tweet: ITweet): Generator {
   }
 }
 
-export function* prefetchTweetLikedStatus(tweet: ITweet): Generator {
+export function* prefetchTweetPersonalLike(tweet: ITweet): Generator {
   try {
     const publicKey = (yield select(selectWallet)) as PublicKey;
     if (publicKey) {
-      const personalLikes = (yield call(getLikes, [
+      const [personalLikeAcc] = (yield call(getLikes, [
         tweetFilter(tweet.key),
         authorFilter(publicKey.toBase58())
       ])) as ILike[];
-      if (personalLikes?.length) {
+      if (personalLikeAcc) {
         const current = (yield select(selectTweet(tweet.publicKey))) as Tweet;
-        const copy = shallowClone<ITweet>(current, { isLiked: true });
+        const copy = shallowClone<ITweet>(current, { personalLike: personalLikeAcc.publicKey });
         yield put(tweetsActions.updateTweet(copy));
       }
-    } else if (tweet.isLiked) {
-      const copy = shallowClone<ITweet>(tweet, { isLiked: false });
+    } else if (tweet.personalLike) {
+      const copy = shallowClone<ITweet>(tweet, { personalLike: null });
       yield put(tweetsActions.updateTweet(copy));
     }
   } catch (error) {
@@ -64,7 +66,7 @@ export function* prefetchTweetLikes(tweet: ITweet): Generator {
   yield all([
     //
     call(prefetchTweetLikesCount, tweet),
-    call(prefetchTweetLikedStatus, tweet)
+    call(prefetchTweetPersonalLike, tweet)
   ]);
 }
 
@@ -153,6 +155,28 @@ export function* handleNewTweets(action: ISetTweetsAction): Generator {
   }
 }
 
+export function* handleAddLike({ payload: tweet }: IAddLikeAction): Generator {
+  if (!tweet.personalLike) {
+    const like = (yield call(addLike, tweet.publicKey)) as ILike;
+    const copy = shallowClone<ITweet>(tweet, {
+      personalLike: like.publicKey,
+      likes: tweet.likes ? tweet.likes + 1 : 1
+    });
+    yield put(tweetsActions.updateTweet(copy));
+  }
+}
+
+export function* handleRemoveLike({ payload: tweet }: IAddLikeAction): Generator {
+  if (tweet.personalLike) {
+    yield call(deleteLike, tweet.personalLike);
+    const copy = shallowClone<ITweet>(tweet, {
+      personalLike: null,
+      likes: tweet.likes ? tweet.likes - 1 : 0
+    });
+    yield put(tweetsActions.updateTweet(copy));
+  }
+}
+
 export function* watchGetTweets(): Generator {
   yield takeLeading(tweetsActions.getTweets, handleGetTweets);
 }
@@ -173,10 +197,24 @@ export function* watchNewTweets(): Generator {
   yield takeLatest([tweetsActions.addTweets, tweetsActions.setTweets], handleNewTweets);
 }
 
+export function* watchAddLike(): Generator {
+  yield takeLeading(tweetsActions.addLike, handleAddLike);
+}
+
+export function* watchRemoveLike(): Generator {
+  yield takeLeading(tweetsActions.removeLike, handleRemoveLike);
+}
+
 export function* tweetsSaga(): Generator {
   yield all(
-    [watchGetTweets, watchAddTweet, watchDeleteTweet, watchGetTweetsNextPage, watchNewTweets].map(
-      spawn
-    )
+    [
+      watchGetTweets,
+      watchAddTweet,
+      watchDeleteTweet,
+      watchGetTweetsNextPage,
+      watchNewTweets,
+      watchAddLike,
+      watchRemoveLike
+    ].map(spawn)
   );
 }

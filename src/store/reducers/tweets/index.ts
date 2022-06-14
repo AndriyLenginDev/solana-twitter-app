@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ITweet } from '@/models/tweet';
 import {
+  IAddLikeAction,
   IAddTweetAction,
   IAddTweetsAction,
   IDeleteTweetAction,
   IGetTweetsAction,
   IGetTweetsNextPageAction,
+  IRemoveLikeAction,
   ISetFilterAction,
   ISetTweetsAction,
   IUpdateTweetAction
@@ -84,6 +86,12 @@ const tweetsSlice = createSlice({
       return state;
     },
     getTweetsNextPage(state, action: IGetTweetsNextPageAction) {
+      return state;
+    },
+    addLike(state, action: IAddLikeAction) {
+      return state;
+    },
+    removeLike(state, action: IRemoveLikeAction) {
       return state;
     }
   }

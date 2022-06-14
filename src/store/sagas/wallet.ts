@@ -4,12 +4,12 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { PublicKey } from '@solana/web3.js';
 import { selectTweets } from '@/store/reducers/tweets/selectors';
 import { ITweet } from '@/models/tweet';
-import { prefetchTweetLikedStatus } from '@/store/sagas/tweets';
+import { prefetchTweetPersonalLike } from '@/store/sagas/tweets';
 
 export function* handlePublicKey(action: PayloadAction<PublicKey | null>) {
   const tweets = (yield select(selectTweets)) as ITweet[];
   if (tweets?.length) {
-    yield all(tweets.map((tweet) => fork(prefetchTweetLikedStatus, tweet)));
+    yield all(tweets.map((tweet) => fork(prefetchTweetPersonalLike, tweet)));
   }
 }
 

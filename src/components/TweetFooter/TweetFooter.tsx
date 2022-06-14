@@ -4,10 +4,10 @@ import { NavLink } from 'react-router-dom';
 import HeartIcon from '@/components/icons/HeartIcon';
 import HeartOutlineIcon from '@/components/icons/HeartOutlineIcon';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useAppDispatch } from '@/hooks/useAppDispatch';
+import { tweetsActions } from '@/store/reducers/tweets';
 import { ITweet } from '@/models/tweet';
-import { ILike } from '@/models/like';
 import { RoutePaths } from '@/router';
-import { addLike, deleteLike } from '@/web3/likes';
 
 interface TweetFooterProps {
   tweet: ITweet;
@@ -15,6 +15,7 @@ interface TweetFooterProps {
 
 const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
   const { connected, publicKey } = useWallet();
+  const dispatch = useAppDispatch();
 
   const topicLink = (topic: string): string => {
     return `${RoutePaths.TOPICS}/${topic}`;
@@ -24,25 +25,19 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
     return !!tweet.likes;
   }, [tweet.likes]);
 
+  const isLiked = useMemo<boolean>(() => {
+    return !!tweet.personalLike;
+  }, [tweet.personalLike]);
+
   const handleAddLike = async () => {
     if (publicKey) {
-      try {
-        // const like = await addLike(tweet.publicKey);
-        // tweet.incrementLikes();
-      } catch (error) {
-        console.error(error);
-      }
+      dispatch(tweetsActions.addLike(tweet));
     }
   };
 
   const handleRemoveLike = async () => {
-    if (publicKey && tweet.isLiked) {
-      try {
-        // await deleteLike(like);
-        // tweet.decrementLikes();
-      } catch (error) {
-        console.error(error);
-      }
+    if (publicKey) {
+      dispatch(tweetsActions.removeLike(tweet));
     }
   };
 
@@ -57,7 +52,7 @@ const TweetFooter: FC<TweetFooterProps> = ({ tweet }) => {
       )}
       <div className={classes.footer__likes}>
         {hasLikes && <span>{tweet.likes}</span>}
-        {tweet.isLiked ? (
+        {isLiked ? (
           <button
             className={classes.active}
             onClick={handleRemoveLike}>
